@@ -2,6 +2,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Img,
+  Sequence,
   interpolate,
   spring,
   staticFile,
@@ -243,14 +244,14 @@ const CountUp: React.FC<{ target: number; frame: number; startFrame: number; suf
 const UNIQUE_FLAGS = Array.from(new Set(USER_GROUPS.map((g) => g.flag)));
 
 const ORGANIZERS = [
-  { name: "Jerome", role: "AWS User Group Belgium", city: "Brussels", flag: "🇧🇪", face: "AWSCommunityGameDayEurope/faces/jerome.jpg", type: "community" as const },
-  { name: "Anda", role: "AWS User Group Geneva", city: "Geneva", flag: "🇨🇭", face: "AWSCommunityGameDayEurope/faces/anda.jpg", type: "community" as const },
-  { name: "Marcel", role: "AWS User Group Münsterland", city: "Münsterland", flag: "🇩🇪", face: "AWSCommunityGameDayEurope/faces/marcel.jpg", type: "community" as const },
-  { name: "Linda", role: "AWS User Group Vienna", city: "Vienna", flag: "🇦🇹", face: "AWSCommunityGameDayEurope/faces/linda.jpg", type: "community" as const },
-  { name: "Manuel", role: "AWS User Group Frankfurt", city: "Frankfurt", flag: "🇩🇪", face: "AWSCommunityGameDayEurope/faces/manuel.jpg", type: "community" as const },
-  { name: "Andreas", role: "AWS User Group Bonn", city: "Bonn", flag: "🇩🇪", face: "AWSCommunityGameDayEurope/faces/andreas.jpg", type: "community" as const },
-  { name: "Lucian", role: "AWS User Group Timisoara", city: "Timisoara", flag: "🇷🇴", face: "AWSCommunityGameDayEurope/faces/lucian.jpg", type: "community" as const },
-  { name: "Mihaly", role: "AWS User Group Budapest", city: "Budapest", flag: "🇭🇺", face: "AWSCommunityGameDayEurope/faces/mihaly.jpg", type: "community" as const },
+  { name: "Jerome", role: "AWS User Group Belgium", country: "Belgium", flag: "🇧🇪", face: "AWSCommunityGameDayEurope/faces/jerome.jpg", type: "community" as const },
+  { name: "Anda", role: "AWS User Group Geneva", country: "Switzerland", flag: "🇨🇭", face: "AWSCommunityGameDayEurope/faces/anda.jpg", type: "community" as const },
+  { name: "Marcel", role: "AWS User Group Münsterland", country: "Germany", flag: "🇩🇪", face: "AWSCommunityGameDayEurope/faces/marcel.jpg", type: "community" as const },
+  { name: "Linda", role: "AWS User Group Vienna", country: "Austria", flag: "🇦🇹", face: "AWSCommunityGameDayEurope/faces/linda.jpg", type: "community" as const },
+  { name: "Manuel", role: "AWS User Group Frankfurt", country: "Germany", flag: "🇩🇪", face: "AWSCommunityGameDayEurope/faces/manuel.jpg", type: "community" as const },
+  { name: "Andreas", role: "AWS User Group Bonn", country: "Germany", flag: "🇩🇪", face: "AWSCommunityGameDayEurope/faces/andreas.jpg", type: "community" as const },
+  { name: "Lucian", role: "AWS User Group Timisoara", country: "Romania", flag: "🇷🇴", face: "AWSCommunityGameDayEurope/faces/lucian.jpg", type: "community" as const },
+  { name: "Mihaly", role: "AWS User Group Budapest", country: "Hungary", flag: "🇭🇺", face: "AWSCommunityGameDayEurope/faces/mihaly.jpg", type: "community" as const },
 ];
 
 const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
@@ -428,53 +429,52 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
       {frame >= 550 && frame < 700 && (
         <AbsoluteFill style={{ opacity: s4Opacity }}>
           <div style={{
-            position: "absolute", top: 60, left: 0, right: 0, textAlign: "center",
+            position: "absolute", top: 40, left: 0, right: 0, textAlign: "center",
             opacity: orgTitleSpring, transform: `translateY(${interpolate(orgTitleSpring, [0, 1], [20, 0])}px)`,
           }}>
-            <div style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", letterSpacing: 4 }}>
+            <div style={{ fontSize: 18, fontWeight: 600, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", letterSpacing: 5 }}>
               ORGANIZED BY
             </div>
             <div style={{
-              fontSize: 28, fontWeight: 800, fontFamily: "'Inter', sans-serif", marginTop: 6,
-              color: GD_GOLD,
-            }}>THE COMMUNITY, FOR THE COMMUNITY</div>
+              fontSize: 36, fontWeight: 900, fontFamily: "'Inter', sans-serif", marginTop: 8,
+              color: GD_GOLD, letterSpacing: 1,
+            }}>From the Community, for the Community</div>
           </div>
           {/* Organizer cards */}
           <div style={{
-            position: "absolute", top: "38%", left: "50%", transform: "translateX(-50%)",
-            display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "24px 32px", maxWidth: 1000,
+            position: "absolute", top: "30%", left: "50%", transform: "translateX(-50%)",
+            display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "28px 40px", maxWidth: 1100,
           }}>
             {ORGANIZERS.map((org, i) => {
-              const cardSpring = spring({ frame: Math.max(0, frame - 565 - i * 15), fps, config: { damping: 12, stiffness: 100 } });
-              const borderColor = org.type === "community" ? GD_PURPLE : GD_ORANGE;
-              const glowColor = org.type === "community" ? GD_VIOLET : GD_ORANGE;
+              const cardSpring = spring({ frame: Math.max(0, frame - 565 - i * 12), fps, config: { damping: 12, stiffness: 100 } });
+              const borderColor = GD_PURPLE;
+              const glowColor = GD_VIOLET;
               return (
                 <div key={org.name} style={{
-                  display: "flex", flexDirection: "column", alignItems: "center", gap: 12,
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: 10,
                   opacity: cardSpring, transform: `translateY(${interpolate(cardSpring, [0, 1], [30, 0])}px)`,
                 }}>
                   <div style={{
-                    width: 90, height: 90, borderRadius: "50%", overflow: "hidden",
-                    border: `3px solid ${borderColor}`, boxShadow: `0 0 20px ${glowColor}40, 0 4px 16px rgba(0,0,0,0.4)`,
+                    width: 130, height: 130, borderRadius: "50%", overflow: "hidden",
+                    border: `3px solid ${borderColor}`, boxShadow: `0 0 24px ${glowColor}40, 0 4px 16px rgba(0,0,0,0.4)`,
                   }}>
                     <Img src={staticFile(org.face)} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   </div>
                   <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: 16, fontWeight: 800, color: "#ffffff", fontFamily: "'Inter', sans-serif" }}>
+                    <div style={{ fontSize: 20, fontWeight: 800, color: "#ffffff", fontFamily: "'Inter', sans-serif" }}>
                       {org.flag} {org.name}
                     </div>
-                    <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", marginTop: 2 }}>
+                    <div style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", fontFamily: "'Inter', sans-serif", marginTop: 3 }}>
                       {org.role}
                     </div>
-                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", fontFamily: "'Inter', sans-serif" }}>
-                      {org.city}
+                    <div style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", marginTop: 1 }}>
+                      {org.country}
                     </div>
                   </div>
                 </div>
               );
             })}
           </div>
-
         </AbsoluteFill>
       )}
 
@@ -1091,32 +1091,47 @@ export const GameDayClosing: React.FC = () => {
       <BackgroundLayer darken={0.65} />
       <HexGridOverlay />
       <SegmentTransitionFlash />
-      {phase === Phase.Showcase && (
-        <AbsoluteFill style={{ zIndex: 10 }}>
-          <ShowcasePhase frame={frame} />
-          <ResultsCountdown frame={frame} />
-        </AbsoluteFill>
-      )}
-      {phase === Phase.Shuffle && (
-        <AbsoluteFill style={{ zIndex: 10 }}>
-          <ShufflePhase frame={frame} />
-          <ResultsCountdown frame={frame} />
-        </AbsoluteFill>
-      )}
-      {phase === Phase.Reveal && (
-        <AbsoluteFill style={{ zIndex: 10 }}>
-          <RevealPhase frame={frame} />
-        </AbsoluteFill>
-      )}
-      {phase === Phase.ThankYou && (
-        <AbsoluteFill style={{ zIndex: 10 }}>
-          <ThankYouPhase frame={frame} />
-        </AbsoluteFill>
-      )}
+
+      {/* Named Sequences for Remotion Studio timeline */}
+      <Sequence name="Showcase (Hero + Scroll)" from={PHASE_BOUNDARIES.showcaseStart} durationInFrames={PHASE_BOUNDARIES.showcaseEnd - PHASE_BOUNDARIES.showcaseStart + 1} layout="none">
+        {phase === Phase.Showcase && (
+          <AbsoluteFill style={{ zIndex: 10 }}>
+            <ShowcasePhase frame={frame} />
+            <ResultsCountdown frame={frame} />
+          </AbsoluteFill>
+        )}
+      </Sequence>
+
+      <Sequence name="Shuffle" from={PHASE_BOUNDARIES.shuffleStart} durationInFrames={PHASE_BOUNDARIES.shuffleEnd - PHASE_BOUNDARIES.shuffleStart + 1} layout="none">
+        {phase === Phase.Shuffle && (
+          <AbsoluteFill style={{ zIndex: 10 }}>
+            <ShufflePhase frame={frame} />
+            <ResultsCountdown frame={frame} />
+          </AbsoluteFill>
+        )}
+      </Sequence>
+
+      <Sequence name="Reveal (6th → 1st + Podium)" from={PHASE_BOUNDARIES.revealStart} durationInFrames={PHASE_BOUNDARIES.revealEnd - PHASE_BOUNDARIES.revealStart + 1} layout="none">
+        {phase === Phase.Reveal && (
+          <AbsoluteFill style={{ zIndex: 10 }}>
+            <RevealPhase frame={frame} />
+          </AbsoluteFill>
+        )}
+      </Sequence>
+
+      <Sequence name="Thank You + Fade" from={PHASE_BOUNDARIES.thankYouStart} durationInFrames={PHASE_BOUNDARIES.thankYouEnd - PHASE_BOUNDARIES.thankYouStart + 1} layout="none">
+        {phase === Phase.ThankYou && (
+          <AbsoluteFill style={{ zIndex: 10 }}>
+            <ThankYouPhase frame={frame} />
+          </AbsoluteFill>
+        )}
+      </Sequence>
+
       <AudioBadge muted={false} />
     </AbsoluteFill>
   );
-};
+}
+
 
 // ── Standalone Sequences for Remotion Studio ──
 
