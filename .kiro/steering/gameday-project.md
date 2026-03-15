@@ -47,6 +47,11 @@ The MainEvent composition is being redesigned: `.kiro/specs/gameday-mainevent-re
 
 Key additions: SpeakerBubbles, CompactSidebar, OrganizerSection, PhaseTimeline, enhanced InfoCardDisplay.
 
+## Event Website
+
+- Official URL: https://www.awsgameday.eu/
+- Use this URL for all CTA / call-to-action references in compositions
+
 ## File References
 
 #[[file:shared/GameDayDesignSystem.tsx]]

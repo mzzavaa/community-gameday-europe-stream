@@ -21,8 +21,8 @@ Build a standalone 15-second Remotion composition showcasing the 8 AWS Community
 - [x] 2. Checkpoint — Verify shared data extraction
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 3. Create the composition file and scenes
-  - [-] 3.1 Create `OrganizersMarketingVideo.tsx` with frame constants and composition shell
+- [x] 3. Create the composition file and scenes
+  - [x] 3.1 Create `OrganizersMarketingVideo.tsx` with frame constants and composition shell
     - Define frame constants: INTRO 0–119, ORG 120–299, OUTRO 300–449, CROSSFADE 15 frames
     - Export `OrganizersMarketingVideo` React component
     - Import `useCurrentFrame`, `useVideoConfig`, `spring`, `interpolate`, `Img`, `staticFile` from Remotion
@@ -31,7 +31,7 @@ Build a standalone 15-second Remotion composition showcasing the 8 AWS Community
     - Render `BackgroundLayer` as base, conditionally render IntroScene, OrganizerScene, OutroScene based on frame ranges
     - _Requirements: 1.1, 1.3, 1.4, 1.5_
 
-  - [~] 3.2 Implement IntroScene (frames 0–119)
+  - [x] 3.2 Implement IntroScene (frames 0–119)
     - Display GameDay logo (`public/AWSCommunityGameDayEurope/GameDay_Solid_Logo_for_swag/GameDay Logo Solid White.png`) with spring entrance from top
     - Display AWS Community Europe logo (`public/AWSCommunityGameDayEurope/AWSCommunityEurope_last_nobackground.png`) with spring entrance from bottom
     - Display "AWS Community GameDay Europe" title text with fade + slide up animation
@@ -40,7 +40,7 @@ Build a standalone 15-second Remotion composition showcasing the 8 AWS Community
     - Use `extrapolateLeft: "clamp"` and `extrapolateRight: "clamp"` on all interpolate calls
     - _Requirements: 2.1, 2.2, 2.3, 2.4, 2.5, 2.6_
 
-  - [~] 3.3 Implement OrganizerScene (frames 120–299)
+  - [x] 3.3 Implement OrganizerScene (frames 120–299)
     - Copy the organizer grid layout from closing ceremony Scene 4 (HeroIntro) with adjusted frame offsets
     - Render heading "COMMUNITY GAMEDAY EUROPE ORGANIZERS" with spring entrance
     - Render subheading "From the Community, for the Community" in GD_GOLD
@@ -49,7 +49,7 @@ Build a standalone 15-second Remotion composition showcasing the 8 AWS Community
     - Opacity fade-in first 15 frames (120–134), fade-out last 15 frames (285–299)
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9_
 
-  - [~] 3.4 Implement OutroScene (frames 300–449)
+  - [x] 3.4 Implement OutroScene (frames 300–449)
     - Radial gradient glow burst using GD_PURPLE → GD_VIOLET → transparent
     - Display GameDay logo + AWS Community Europe logo with spring entrance, centered
     - Display tagline "AWS Community GameDay Europe · 17 March 2026" with fade-in
@@ -58,11 +58,11 @@ Build a standalone 15-second Remotion composition showcasing the 8 AWS Community
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
 
 
-- [ ] 4. Checkpoint — Verify all three scenes render
+- [x] 4. Checkpoint — Verify all three scenes render
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 5. Register composition and wire up
-  - [~] 5.1 Register `OrganizersMarketingVideo` in `src/Root.tsx`
+- [x] 5. Register composition and wire up
+  - [x] 5.1 Register `OrganizersMarketingVideo` in `src/Root.tsx`
     - Import `OrganizersMarketingVideo` from `../OrganizersMarketingVideo`
     - Add `<Composition id="OrganizersMarketingVideo" component={OrganizersMarketingVideo} durationInFrames={450} fps={30} width={1280} height={720} />`
     - _Requirements: 1.2, 1.3_
@@ -97,7 +97,7 @@ Build a standalone 15-second Remotion composition showcasing the 8 AWS Community
     - Verify all 8 organizers by name: Jerome, Anda, Marcel, Linda, Manuel, Andreas, Lucian, Mihaly
     - _Requirements: 1.2, 1.3, 3.9, 5.1_
 
-- [ ] 6. Final checkpoint — Ensure all tests pass
+- [x] 6. Final checkpoint — Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
 ## Notes

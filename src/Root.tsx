@@ -11,6 +11,7 @@ import {
   ClosingTeamPodium,
   ClosingThankYou,
 } from "../03-GameDayStreamClosing-Audio";
+import { OrganizersMarketingVideo } from "../OrganizersMarketingVideo";
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -118,6 +119,16 @@ export const RemotionRoot: React.FC = () => {
         id="Closing-ThankYou"
         component={ClosingThankYou}
         durationInFrames={9000}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+
+      {/* 4. Organizers Marketing Video: standalone 15s social media clip */}
+      <Composition
+        id="OrganizersMarketingVideo"
+        component={OrganizersMarketingVideo}
+        durationInFrames={450}
         fps={30}
         width={1280}
         height={720}

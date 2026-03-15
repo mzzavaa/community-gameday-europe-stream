@@ -434,8 +434,8 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
           </div>
           {/* Organizer cards */}
           <div style={{
-            position: "absolute", top: "28%", left: "50%", transform: "translateX(-50%)",
-            display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "36px 52px", maxWidth: 1150,
+            position: "absolute", top: "25%", left: "50%", transform: "translateX(-50%)",
+            display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "36px 80px", maxWidth: 1250,
           }}>
             {ORGANIZERS.map((org, i) => {
               const cardSpring = spring({ frame: Math.max(0, frame - 565 - i * 12), fps, config: { damping: 12, stiffness: 100 } });
@@ -451,13 +451,13 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
                     <Img src={staticFile(org.face)} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   </div>
                   <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: 20, fontWeight: 800, color: "#ffffff", fontFamily: "'Inter', sans-serif" }}>
+                    <div style={{ fontSize: 24, fontWeight: 800, color: "#ffffff", fontFamily: "'Inter', sans-serif" }}>
                       {org.flag} {org.name}
                     </div>
-                    <div style={{ fontSize: 14, color: "rgba(255,255,255,0.55)", fontFamily: "'Inter', sans-serif", marginTop: 3 }}>
+                    <div style={{ fontSize: 16, color: "rgba(255,255,255,0.55)", fontFamily: "'Inter', sans-serif", marginTop: 3, whiteSpace: "nowrap" }}>
                       {org.role}
                     </div>
-                    <div style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", marginTop: 1 }}>
+                    <div style={{ fontSize: 15, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", marginTop: 1 }}>
                       {org.country}
                     </div>
                   </div>

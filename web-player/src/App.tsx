@@ -95,6 +95,7 @@ const SEGMENTS: { id: SegmentId; label: string }[] = [
 const COUNTDOWN_MILESTONES = SCHEDULE.filter((s) => s.id !== "end").map((s) => ({
   label: s.label,
   time: s.start,
+  id: s.id,
 }));
 
 export const App: React.FC = () => {
