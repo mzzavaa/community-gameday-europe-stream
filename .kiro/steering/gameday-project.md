@@ -1,5 +1,6 @@
 ---
 inclusion: auto
+description: "AWS Community GameDay Europe project context, architecture, compositions, timing, and technical constraints"
 ---
 
 # AWS Community GameDay Europe — Stream Visuals Project
@@ -18,10 +19,10 @@ This is a Remotion (React video framework) project containing 4 stream overlay c
 
 ## The 4 Compositions
 
-1. `1-GameDayStreamPreShow.tsx` — 10-min looping countdown (×3 = 30 min pre-stream)
-2. `2-GameDayStreamMainEvent.tsx` — 30-min live introductions (currently being redesigned)
-3. `3-GameDayStreamGameplay.tsx` — 120-min muted gameplay overlay
-4. `4-GameDayStreamClosing.tsx` — 15-min closing ceremony
+0. `00-GameDayStreamPreShow-Muted.tsx` — 10-min looping countdown (×3 = 30 min pre-stream, muted)
+1. `01-GameDayStreamMainEvent-Audio.tsx` — 30-min live introductions (audio, currently being redesigned)
+2. `02-GameDayStreamGameplay-Muted.tsx` — 120-min muted gameplay overlay
+3. `03-GameDayStreamClosing-Audio.tsx` — 15-min closing ceremony (audio)
 
 ## Key Technical Constraints
 
@@ -49,4 +50,4 @@ Key additions: SpeakerBubbles, CompactSidebar, OrganizerSection, PhaseTimeline, 
 ## File References
 
 #[[file:shared/GameDayDesignSystem.tsx]]
-#[[file:2-GameDayStreamMainEvent.tsx]]
+#[[file:01-GameDayStreamMainEvent-Audio.tsx]]

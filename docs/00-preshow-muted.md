@@ -1,4 +1,4 @@
-# 1. Pre-Show — `1-GameDayStreamPreShow.tsx`
+# 0. Pre-Show (Muted) — `00-GameDayStreamPreShow-Muted.tsx`
 
 ## Overview
 

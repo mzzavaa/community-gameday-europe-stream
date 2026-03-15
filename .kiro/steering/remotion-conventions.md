@@ -1,5 +1,6 @@
 ---
 inclusion: auto
+description: "Remotion coding conventions, animation patterns, layer ordering, testing, and naming standards for this project"
 ---
 
 # Remotion Conventions for This Project

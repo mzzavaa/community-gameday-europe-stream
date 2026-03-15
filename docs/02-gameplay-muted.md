@@ -1,4 +1,4 @@
-# 3. Gameplay — `3-GameDayStreamGameplay.tsx`
+# 2. Gameplay (Muted) — `02-GameDayStreamGameplay-Muted.tsx`
 
 ## Overview
 

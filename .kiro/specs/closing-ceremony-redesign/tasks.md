@@ -25,11 +25,11 @@ Transform the closing ceremony composition from a static countdown-plus-schedule
     - The `ScheduleCard` component can remain in the file (unused) or be removed
     - _Requirements: 2.1, 2.2, 2.3_
 
-- [-] 2. Checkpoint - Verify removals
+- [x] 2. Checkpoint - Verify removals
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 3. Create LogoCarousel component
-  - [~] 3.1 Import LOGO_MAP and create LogoCarousel in `4-GameDayStreamClosing.tsx`
+- [x] 3. Create LogoCarousel component
+  - [x] 3.1 Import LOGO_MAP and create LogoCarousel in `4-GameDayStreamClosing.tsx`
     - Import `LOGO_MAP as FULL_LOGO_MAP` from `archive/CommunityGamedayEuropeV4.tsx`
     - Define constants: `CAROUSEL_END_FRAME = 9000`, `SLOT_COUNT = 6`, `LOGOS_PER_SLOT = 8`
     - Distribute 48 logos into 6 groups of 8 using modulo assignment (`i % 6 === slotIndex`)
@@ -48,8 +48,8 @@ Transform the closing ceremony composition from a static countdown-plus-schedule
     - Verify all 48 logos from FULL_LOGO_MAP are distributed across the 6 carousel groups with no duplicates and no missing entries
     - **Validates: Requirements 3.2, 3.3, 3.5**
 
-- [ ] 4. Create RevealCountdown component
-  - [~] 4.1 Implement RevealCountdown in `4-GameDayStreamClosing.tsx`
+- [x] 4. Create RevealCountdown component
+  - [x] 4.1 Implement RevealCountdown in `4-GameDayStreamClosing.tsx`
     - Implement `RevealCountdown` component with `RevealCountdownProps` interface (`frame: number`, `fps: number`)
     - Display "RESULTS IN" label: 14px, uppercase, letter-spacing 3, `GD_GOLD` color
     - Display MM:SS countdown: 36px, bold, white, monospace using `formatTime((9000 - frame) / fps)`
@@ -62,14 +62,14 @@ Transform the closing ceremony composition from a static countdown-plus-schedule
     - For random frame in [0, 8999], verify displayed time equals `formatTime(Math.floor((9000 - frame) / 30))`
     - **Validates: Requirements 4.2, 4.5**
 
-- [ ] 5. Modify ClosingPodium and integrate into GameDayClosing
-  - [~] 5.1 Add `startFrame` prop to ClosingPodium
+- [x] 5. Modify ClosingPodium and integrate into GameDayClosing
+  - [x] 5.1 Add `startFrame` prop to ClosingPodium
     - Add optional `startFrame?: number` prop to `ClosingPodium` component signature
     - Add guard: `if (frame < (startFrame ?? 0)) return null;`
     - Adjust `revealFrame` values for each `TeamCard` to be relative to `startFrame` (e.g., rank 6 at `startFrame + 0`, rank 1 at `startFrame + 1500`)
     - _Requirements: 5.1, 5.3, 5.4_
 
-  - [~] 5.2 Integrate new components into GameDayClosing composition
+  - [x] 5.2 Integrate new components into GameDayClosing composition
     - Render `LogoCarousel` conditionally when `frame < 9000`
     - Render `RevealCountdown` conditionally when `frame < 9000`
     - Pass `startFrame={9000}` to `ClosingPodium`
@@ -82,10 +82,10 @@ Transform the closing ceremony composition from a static countdown-plus-schedule
     - For random frame in [0, 53999]: if frame < 9000, carousel and countdown visible, podium not visible; if 9000 ≤ frame < 12600, podium visible, carousel/countdown not visible; if frame ≥ 12600, none visible
     - **Validates: Requirements 3.1, 3.6, 4.1, 4.4, 5.1, 5.4, 5.5**
 
-- [~] 6. Checkpoint - Verify full integration
+- [x] 6. Checkpoint - Verify full integration
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 7. Write remaining property tests
+- [x] 7. Write remaining property tests
   - [ ]* 7.1 Write property test for Big Timer absence
     - **Property 1: Big Timer is absent**
     - For random frame in [0, 53999], verify no "Event Ends In" text in rendered output
@@ -106,7 +106,7 @@ Transform the closing ceremony composition from a static countdown-plus-schedule
     - For random frame in [0, 53999], verify PhaseMarker displays the correct segment name from CLOSING_SEGMENTS
     - **Validates: Requirements 7.2**
 
-- [~] 8. Final checkpoint - Ensure all tests pass
+- [x] 8. Final checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
 ## Notes

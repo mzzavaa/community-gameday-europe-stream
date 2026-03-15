@@ -1,4 +1,4 @@
-# 4. Closing Ceremony — `4-GameDayStreamClosing.tsx`
+# 3. Closing Ceremony (Audio) — `03-GameDayStreamClosing-Audio.tsx`
 
 ## Overview
 

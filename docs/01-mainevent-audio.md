@@ -1,4 +1,4 @@
-# 2. Main Event — `2-GameDayStreamMainEvent.tsx`
+# 1. Main Event (Audio) — `01-GameDayStreamMainEvent-Audio.tsx`
 
 ## Overview
 

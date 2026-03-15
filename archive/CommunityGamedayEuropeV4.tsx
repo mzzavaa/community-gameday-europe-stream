@@ -68,7 +68,7 @@ export const LOGO_MAP: Record<string, string> = {
 };
 
 // ── All 53 participating user groups ──
-const USER_GROUPS = [
+export const USER_GROUPS = [
   { flag: "🇬🇧", name: "AWS Leeds User Group", city: "Leeds, United Kingdom" },
   { flag: "🇫🇮", name: "AWS Meetup JKL", city: "Jyväskylä, Finland" },
   { flag: "🇵🇹", name: "AWS Porto User Group", city: "Porto, Portugal" },

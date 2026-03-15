@@ -5,10 +5,11 @@
 import { describe, it, expect } from "vitest";
 import * as fc from "fast-check";
 import { formatTime, calculateCountdown, staggeredEntry, getPhaseInfo } from "../shared/GameDayDesignSystem";
-import { isAudioCueBannerVisible } from "../1-GameDayStreamPreShow";
-import { isGameplayAudioCueBannerVisible, isFinal30MinutesActive, isUrgencyGlowActive, GAMEPLAY_PHASES } from "../3-GameDayStreamGameplay";
-import { MAIN_EVENT_SEGMENTS } from "../2-GameDayStreamMainEvent";
-import { CLOSING_SEGMENTS } from "../4-GameDayStreamClosing";
+import { isAudioCueBannerVisible } from "../00-GameDayStreamPreShow-Muted";
+import { isGameplayAudioCueBannerVisible, isFinal30MinutesActive, isUrgencyGlowActive, GAMEPLAY_PHASES } from "../02-GameDayStreamGameplay-Muted";
+import { MAIN_EVENT_SEGMENTS } from "../01-GameDayStreamMainEvent-Audio";
+// CLOSING_SEGMENTS was removed in the closing-ceremony-v2 redesign.
+// The new composition uses Phase enum and PHASE_BOUNDARIES instead.
 
 const FC_CONFIG = { numRuns: 100 };
 
@@ -208,21 +209,8 @@ describe("Feature: gameday-full-stream-timeline", () => {
       }
     });
 
-    it("CLOSING_SEGMENTS: first segment starts at frame 0", () => {
-      expect(CLOSING_SEGMENTS[0].startFrame).toBe(0);
-    });
-
-    it("CLOSING_SEGMENTS: last segment ends at composition final frame (26999)", () => {
-      expect(CLOSING_SEGMENTS[CLOSING_SEGMENTS.length - 1].endFrame).toBe(26999);
-    });
-
-    it("CLOSING_SEGMENTS: consecutive segments have no gaps or overlaps", () => {
-      for (let i = 0; i < CLOSING_SEGMENTS.length - 1; i++) {
-        expect(CLOSING_SEGMENTS[i + 1].startFrame).toBe(
-          CLOSING_SEGMENTS[i].endFrame + 1,
-        );
-      }
-    });
+    // CLOSING_SEGMENTS tests removed — the closing-ceremony-v2 redesign
+    // replaced segment-based architecture with Phase enum + PHASE_BOUNDARIES.
   });
 
   describe("Property 5: Phase info correctness", () => {
@@ -281,26 +269,9 @@ describe("Feature: gameday-full-stream-timeline", () => {
       );
     });
 
-    it("for any frame in Closing range, getPhaseInfo returns non-empty name and correct progress", () => {
-      fc.assert(
-        fc.property(fc.integer({ min: 0, max: 26999 }), (frame) => {
-          const result = getPhaseInfo(frame, CLOSING_SEGMENTS);
-          expect(typeof result.name).toBe("string");
-          expect(result.name.length).toBeGreaterThan(0);
-          expect(result.progress).toBeGreaterThanOrEqual(0);
-          expect(result.progress).toBeLessThanOrEqual(1);
-
-          const seg = CLOSING_SEGMENTS.find(
-            (s) => frame >= s.startFrame && frame <= s.endFrame,
-          );
-          expect(seg).toBeDefined();
-          const expectedProgress =
-            (frame - seg!.startFrame) / (seg!.endFrame - seg!.startFrame + 1);
-          expect(result.progress).toBeCloseTo(expectedProgress, 10);
-        }),
-        FC_CONFIG,
-      );
-    });
+    // Closing range test removed — CLOSING_SEGMENTS no longer exists after
+    // the closing-ceremony-v2 redesign. Phase gating is now tested via
+    // closing-ceremony-v2.property.test.ts Property 1.
   });
 
   describe("Property 8: Gameplay urgency thresholds", () => {
