@@ -53,7 +53,7 @@ export const CountdownComposition: React.FC<CountdownProps> = ({ eventDate, mile
         <div style={{ display: "flex", alignItems: "center", gap: 20, marginBottom: 28, ...anim(0) }}>
           <Img src={COMMUNITY_LOGO} style={{ height: 100 }} />
           <div style={{ width: 1, height: 60, background: `${GD_PURPLE}55` }} />
-          <Img src={LOGO} style={{ height: 85 }} />
+          <Img src={LOGO} style={{ height: 140 }} />
         </div>
 
         <div style={{ ...anim(6), textAlign: "center" }}>
