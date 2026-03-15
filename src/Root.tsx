@@ -12,6 +12,7 @@ import {
   ClosingThankYou,
 } from "../03-GameDayStreamClosing-Audio";
 import { OrganizersMarketingVideo } from "../OrganizersMarketingVideo";
+import { GameDayPreShowInfo } from "../04-GameDayStreamPreShowInfo-Muted";
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -129,6 +130,16 @@ export const RemotionRoot: React.FC = () => {
         id="OrganizersMarketingVideo"
         component={OrganizersMarketingVideo}
         durationInFrames={590}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+
+      {/* 5. Pre-Show Info Loop (Muted): 30 min with rotating content sections */}
+      <Composition
+        id="GameDayPreShowInfo"
+        component={GameDayPreShowInfo}
+        durationInFrames={54000}
         fps={30}
         width={1280}
         height={720}

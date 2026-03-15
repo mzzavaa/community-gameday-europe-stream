@@ -7,6 +7,7 @@ import {
   GD_GOLD,
   BackgroundLayer,
   springConfig,
+  TYPOGRAPHY,
 } from "./shared/GameDayDesignSystem";
 import { ORGANIZERS } from "./shared/organizers";
 
@@ -137,7 +138,7 @@ const OrganizerScene: React.FC<{ frame: number; fps: number }> = ({ frame, fps }
       >
         <div
           style={{
-            fontSize: 18,
+            fontSize: TYPOGRAPHY.bodySmall,
             fontWeight: 600,
             color: "rgba(255,255,255,0.5)",
             fontFamily: "'Inter', sans-serif",
@@ -148,7 +149,7 @@ const OrganizerScene: React.FC<{ frame: number; fps: number }> = ({ frame, fps }
         </div>
         <div
           style={{
-            fontSize: 36,
+            fontSize: TYPOGRAPHY.h4,
             fontWeight: 900,
             fontFamily: "'Inter', sans-serif",
             marginTop: 8,

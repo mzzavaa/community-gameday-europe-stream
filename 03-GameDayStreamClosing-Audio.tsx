@@ -23,6 +23,7 @@ import {
   GD_PINK,
   GD_ACCENT,
   GD_ORANGE,
+  TYPOGRAPHY,
 } from "./shared/GameDayDesignSystem";
 import { USER_GROUPS, LOGO_MAP } from "./archive/CommunityGamedayEuropeV4";
 import { ORGANIZERS, AWS_SUPPORTERS } from "./shared/organizers";
@@ -136,7 +137,7 @@ export const PositionLabel: React.FC<{ rank: number }> = ({ rank }) => {
         backdropFilter: "blur(8px)",
         borderRadius: 8,
         padding: "2px 8px",
-        fontSize: 16,
+        fontSize: TYPOGRAPHY.caption,
         fontWeight: 700,
         color: "white",
         fontFamily: "'Inter', sans-serif",
@@ -320,7 +321,7 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
               { text: "DAY", spring: word3Spring, color: GD_PINK },
             ].map((w) => (
               <div key={w.text} style={{
-                fontSize: 104, fontWeight: 900, fontFamily: "'Inter', sans-serif", letterSpacing: 6,
+                fontSize: TYPOGRAPHY.h1, fontWeight: 900, fontFamily: "'Inter', sans-serif", letterSpacing: 6,
                 color: w.color, opacity: w.spring,
                 transform: `translateY(${interpolate(w.spring, [0, 1], [60, 0])}px) scale(${interpolate(w.spring, [0, 1], [0.7, 1])})`,
                 textShadow: `0 0 40px ${w.color}40, 0 4px 20px rgba(0,0,0,0.5)`,
@@ -329,11 +330,11 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
           </div>
           {/* Date */}
           <div style={{ position: "absolute", top: "58%", left: 0, right: 0, textAlign: "center", opacity: dateFade }}>
-            <span style={{ fontSize: 28, fontWeight: 600, color: GD_GOLD, fontFamily: "'Inter', sans-serif", letterSpacing: 3 }}>17 MARCH 2026</span>
+            <span style={{ fontSize: TYPOGRAPHY.h5, fontWeight: 600, color: GD_GOLD, fontFamily: "'Inter', sans-serif", letterSpacing: 3 }}>17 MARCH 2026</span>
           </div>
           {/* Subtitle */}
           <div style={{ position: "absolute", top: "65%", left: 0, right: 0, textAlign: "center", opacity: subtitleFade }}>
-            <span style={{ fontSize: 20, fontWeight: 400, color: "rgba(255,255,255,0.6)", fontFamily: "'Inter', sans-serif", letterSpacing: 2 }}>
+            <span style={{ fontSize: TYPOGRAPHY.body, fontWeight: 400, color: "rgba(255,255,255,0.6)", fontFamily: "'Inter', sans-serif", letterSpacing: 2 }}>
               THE FIRST AWS COMMUNITY GAMEDAY EUROPE
             </span>
           </div>
@@ -344,7 +345,7 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
       {frame >= 160 && frame < 380 && (
         <AbsoluteFill style={{ opacity: s2Opacity }}>
           <div style={{ position: "absolute", top: 50, left: 0, right: 0, textAlign: "center" }}>
-            <span style={{ fontSize: 18, fontWeight: 600, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", letterSpacing: 4, textTransform: "uppercase" }}>
+            <span style={{ fontSize: TYPOGRAPHY.bodySmall, fontWeight: 600, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", letterSpacing: 4, textTransform: "uppercase" }}>
               TONIGHT WE MADE HISTORY
             </span>
           </div>
@@ -361,14 +362,14 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
                   transform: `translateY(${interpolate(statSpring, [0, 1], [40, 0])}px)`,
                 }}>
                   <div style={{
-                    fontSize: 80, fontWeight: 900, fontFamily: "'Inter', sans-serif",
+                    fontSize: TYPOGRAPHY.stat, fontWeight: 900, fontFamily: "'Inter', sans-serif",
                     color: accentColors[i], lineHeight: 1,
                     textShadow: `0 0 30px ${accentColors[i]}50`,
                   }}>
                     <CountUp target={stat.value} frame={frame} startFrame={stat.delay} suffix={stat.suffix} />
                   </div>
                   <div style={{
-                    fontSize: 17, fontWeight: 600, color: "rgba(255,255,255,0.5)", marginTop: 8,
+                    fontSize: TYPOGRAPHY.caption, fontWeight: 600, color: "rgba(255,255,255,0.5)", marginTop: 8,
                     letterSpacing: 3, fontFamily: "'Inter', sans-serif",
                   }}>{stat.label}</div>
                 </div>
@@ -385,11 +386,11 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
             position: "absolute", top: 80, left: 0, right: 0, textAlign: "center",
             opacity: flagTitleSpring, transform: `translateY(${interpolate(flagTitleSpring, [0, 1], [20, 0])}px)`,
           }}>
-            <div style={{ fontSize: 20, fontWeight: 600, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", letterSpacing: 4 }}>
+            <div style={{ fontSize: TYPOGRAPHY.body, fontWeight: 600, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", letterSpacing: 4 }}>
               THANK YOU TO EVERY
             </div>
             <div style={{
-              fontSize: 42, fontWeight: 900, fontFamily: "'Inter', sans-serif", marginTop: 8,
+              fontSize: TYPOGRAPHY.h3, fontWeight: 900, fontFamily: "'Inter', sans-serif", marginTop: 8,
               background: `linear-gradient(135deg, #ffffff, ${GD_ACCENT})`,
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
             }}>USER GROUP LEADER</div>
@@ -403,7 +404,7 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
               const flagSpring = spring({ frame: Math.max(0, frame - 395 - i * 3), fps, config: { damping: 14, stiffness: 120 } });
               return (
                 <div key={i} style={{
-                  fontSize: 48, opacity: flagSpring,
+                  fontSize: TYPOGRAPHY.flag, opacity: flagSpring,
                   transform: `scale(${interpolate(flagSpring, [0, 1], [0.3, 1])}) translateY(${interpolate(flagSpring, [0, 1], [20, 0])}px)`,
                   filter: `drop-shadow(0 4px 12px rgba(0,0,0,0.4))`,
                 }}>{flag}</div>
@@ -415,7 +416,7 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
             position: "absolute", bottom: 80, left: 0, right: 0, textAlign: "center",
             opacity: interpolate(frame, [430, 450], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
           }}>
-            <span style={{ fontSize: 18, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", letterSpacing: 2 }}>
+            <span style={{ fontSize: TYPOGRAPHY.bodySmall, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", letterSpacing: 2 }}>
               {`VOLUNTEERS • ACROSS ALL ${COUNTRIES.length}+ PARTICIPATING COUNTRIES • PURE COMMUNITY SPIRIT`}
             </span>
           </div>
@@ -429,11 +430,11 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
             position: "absolute", top: 40, left: 0, right: 0, textAlign: "center",
             opacity: orgTitleSpring, transform: `translateY(${interpolate(orgTitleSpring, [0, 1], [20, 0])}px)`,
           }}>
-            <div style={{ fontSize: 22, fontWeight: 600, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", letterSpacing: 5 }}>
+            <div style={{ fontSize: TYPOGRAPHY.h6, fontWeight: 600, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", letterSpacing: 5 }}>
               COMMUNITY GAMEDAY EUROPE ORGANIZERS
             </div>
             <div style={{
-              fontSize: 42, fontWeight: 900, fontFamily: "'Inter', sans-serif", marginTop: 8,
+              fontSize: TYPOGRAPHY.h3, fontWeight: 900, fontFamily: "'Inter', sans-serif", marginTop: 8,
               color: GD_GOLD, letterSpacing: 1,
             }}>From the Community, for the Community</div>
           </div>
@@ -456,13 +457,13 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
                     <Img src={staticFile(org.face)} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   </div>
                   <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: 28, fontWeight: 800, color: "#ffffff", fontFamily: "'Inter', sans-serif" }}>
+                    <div style={{ fontSize: TYPOGRAPHY.h5, fontWeight: 800, color: "#ffffff", fontFamily: "'Inter', sans-serif" }}>
                       {org.flag} {org.name}
                     </div>
-                    <div style={{ fontSize: 20, color: "rgba(255,255,255,0.55)", fontFamily: "'Inter', sans-serif", marginTop: 3, whiteSpace: "nowrap" }}>
+                    <div style={{ fontSize: TYPOGRAPHY.body, color: "rgba(255,255,255,0.55)", fontFamily: "'Inter', sans-serif", marginTop: 3, whiteSpace: "nowrap" }}>
                       {org.role}
                     </div>
-                    <div style={{ fontSize: 19, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", marginTop: 1 }}>
+                    <div style={{ fontSize: TYPOGRAPHY.bodySmall, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", marginTop: 1 }}>
                       {org.country}
                     </div>
                   </div>
@@ -480,12 +481,12 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
             position: "absolute", top: 40, left: 0, right: 0, textAlign: "center",
             opacity: awsTitleSpring, transform: `translateY(${interpolate(awsTitleSpring, [0, 1], [20, 0])}px)`,
           }}>
-            <div style={{ fontSize: 18, fontWeight: 600, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", letterSpacing: 5 }}>
+            <div style={{ fontSize: TYPOGRAPHY.bodySmall, fontWeight: 600, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", letterSpacing: 5 }}>
               POWERED BY
             </div>
             <div style={{
-              fontSize: 36, fontWeight: 900, fontFamily: "'Inter', sans-serif", marginTop: 8,
-              color: GD_ACCENT, letterSpacing: 1,
+              fontSize: TYPOGRAPHY.h4, fontWeight: 900, fontFamily: "'Inter', sans-serif", marginTop: 8,
+              color: GD_ORANGE, letterSpacing: 1,
             }}>Thank You, AWS</div>
           </div>
           {/* Subtitle */}
@@ -493,7 +494,7 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
             position: "absolute", top: 130, left: 0, right: 0, textAlign: "center",
             opacity: interpolate(frame, [1060, 1090], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
           }}>
-            <span style={{ fontSize: 15, color: "rgba(255,255,255,0.45)", fontFamily: "'Inter', sans-serif", letterSpacing: 1 }}>
+            <span style={{ fontSize: TYPOGRAPHY.captionSmall, color: "rgba(255,255,255,0.45)", fontFamily: "'Inter', sans-serif", letterSpacing: 1 }}>
               For the GameDay environment, outstanding support during organization, and so much more
             </span>
           </div>
@@ -512,19 +513,19 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
                 }}>
                   <div style={{
                     width: 140, height: 140, borderRadius: "50%", overflow: "hidden",
-                    boxShadow: `0 0 30px ${GD_ACCENT}50, 0 0 60px ${GD_PURPLE}30, 0 4px 16px rgba(0,0,0,0.4)`,
-                    border: `2px solid ${GD_ACCENT}40`,
+                    boxShadow: `0 0 30px ${GD_ORANGE}50, 0 0 60px ${GD_ORANGE}30, 0 4px 16px rgba(0,0,0,0.4)`,
+                    border: `2px solid ${GD_ORANGE}40`,
                   }}>
                     <Img src={staticFile(person.face)} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   </div>
                   <div style={{ textAlign: "center", maxWidth: 200 }}>
-                    <div style={{ fontSize: 24, fontWeight: 800, color: "#ffffff", fontFamily: "'Inter', sans-serif" }}>
+                    <div style={{ fontSize: TYPOGRAPHY.h6, fontWeight: 800, color: "#ffffff", fontFamily: "'Inter', sans-serif" }}>
                       {person.name}
                     </div>
-                    <div style={{ fontSize: 14, color: GD_ACCENT, fontFamily: "'Inter', sans-serif", marginTop: 4, fontWeight: 600 }}>
+                    <div style={{ fontSize: TYPOGRAPHY.captionSmall, color: GD_ORANGE, fontFamily: "'Inter', sans-serif", marginTop: 4, fontWeight: 600 }}>
                       {person.country}
                     </div>
-                    <div style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", marginTop: 3, lineHeight: 1.3 }}>
+                    <div style={{ fontSize: TYPOGRAPHY.label, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", marginTop: 3, lineHeight: 1.3 }}>
                       {person.role}
                     </div>
                   </div>
@@ -542,8 +543,8 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
               background: "rgba(255,255,255,0.05)", backdropFilter: "blur(8px)",
               borderRadius: 12, padding: "10px 24px", border: "1px solid rgba(255,255,255,0.08)",
             }}>
-              <span style={{ fontSize: 20 }}>🙏</span>
-              <span style={{ fontSize: 15, fontWeight: 600, color: "rgba(255,255,255,0.6)", fontFamily: "'Inter', sans-serif", letterSpacing: 1 }}>
+              <span style={{ fontSize: TYPOGRAPHY.body }}>🙏</span>
+              <span style={{ fontSize: TYPOGRAPHY.captionSmall, fontWeight: 600, color: "rgba(255,255,255,0.6)", fontFamily: "'Inter', sans-serif", letterSpacing: 1 }}>
                 And many more AWS colleagues who made this possible
               </span>
             </div>
@@ -565,7 +566,7 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
             position: "absolute", top: "32%", left: 0, right: 0, textAlign: "center",
             opacity: andNowSpring, transform: `translateY(${interpolate(andNowSpring, [0, 1], [30, 0])}px)`,
           }}>
-            <span style={{ fontSize: 24, fontWeight: 600, color: "rgba(255,255,255,0.6)", fontFamily: "'Inter', sans-serif", letterSpacing: 6 }}>
+            <span style={{ fontSize: TYPOGRAPHY.h6, fontWeight: 600, color: "rgba(255,255,255,0.6)", fontFamily: "'Inter', sans-serif", letterSpacing: 6 }}>
               AND NOW...
             </span>
           </div>
@@ -575,7 +576,7 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
             transform: `scale(${resultsPulse * interpolate(resultsSpring, [0, 1], [0.6, 1])})`,
           }}>
             <div style={{
-              fontSize: 72, fontWeight: 900, fontFamily: "'Inter', sans-serif", letterSpacing: 8,
+              fontSize: TYPOGRAPHY.h2, fontWeight: 900, fontFamily: "'Inter', sans-serif", letterSpacing: 8,
               background: `linear-gradient(135deg, ${GD_GOLD} 0%, #ffffff 40%, ${GD_GOLD} 100%)`,
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
               textShadow: "none", filter: `drop-shadow(0 0 30px ${GD_GOLD}40)`,
@@ -588,7 +589,7 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
           }}>
             <div style={{
               background: `linear-gradient(135deg, #4f46e5, ${GD_PINK})`, borderRadius: 12, padding: "10px 28px",
-              fontSize: 14, fontWeight: 700, color: "#ffffff", fontFamily: "'Inter', sans-serif", letterSpacing: 1,
+              fontSize: TYPOGRAPHY.captionSmall, fontWeight: 700, color: "#ffffff", fontFamily: "'Inter', sans-serif", letterSpacing: 1,
               display: "flex", alignItems: "center",
             }}>
               <Img src={staticFile("AWSCommunityGameDayEurope/GameDay_Solid_Logo_for_swag/GameDay Logo Solid White.png")} style={{ height: 24, marginRight: 8 }} />
@@ -668,15 +669,15 @@ const FastScroll: React.FC<{ frame: number }> = ({ frame }) => {
                   </div>
                 ) : (
                   <div style={{ width: "100%", flex: 1, borderRadius: "16px 16px 0 0", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", background: `linear-gradient(135deg, ${accentColor}40, ${GD_DARK})` }}>
-                    <div style={{ fontSize: 72, filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.4))" }}>{group.flag}</div>
+                    <div style={{ fontSize: TYPOGRAPHY.h2, filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.4))" }}>{group.flag}</div>
                   </div>
                 )}
                 <div style={{ padding: "6px 12px 8px", display: "flex", flexDirection: "column", gap: 2 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <div style={{ fontSize: 14, lineHeight: 1 }}>{group.flag}</div>
-                    <div style={{ fontSize: 13, fontWeight: 700, color: "#ffffff", fontFamily: "'Inter', sans-serif", lineHeight: 1.2 }}>{group.name}</div>
+                    <div style={{ fontSize: TYPOGRAPHY.captionSmall, lineHeight: 1 }}>{group.flag}</div>
+                    <div style={{ fontSize: TYPOGRAPHY.label, fontWeight: 700, color: "#ffffff", fontFamily: "'Inter', sans-serif", lineHeight: 1.2 }}>{group.name}</div>
                   </div>
-                  <div style={{ fontSize: 11, color: "#94a3b8", fontFamily: "'Inter', sans-serif", display: "flex", alignItems: "center", gap: 4, marginLeft: 22 }}>📍 {group.city}</div>
+                  <div style={{ fontSize: TYPOGRAPHY.overline, color: "#94a3b8", fontFamily: "'Inter', sans-serif", display: "flex", alignItems: "center", gap: 4, marginLeft: 22 }}>📍 {group.city}</div>
                 </div>
                 <div style={{ height: 2, background: `linear-gradient(90deg, transparent, ${accentColor}60, transparent)` }} />
               </div>
@@ -706,8 +707,8 @@ const ResultsCountdown: React.FC<{ frame: number }> = ({ frame }) => {
     <div style={{ position: "absolute", top: 16, right: 16, zIndex: 20 }}>
       <GlassCard style={{ padding: "6px 14px" }}>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
-          <div style={{ fontSize: 9, fontWeight: 500, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", textTransform: "uppercase", letterSpacing: 1 }}>Results in</div>
-          <div style={{ fontSize: 16, fontWeight: 700, color: GD_GOLD, fontFamily: "'Inter', sans-serif", fontVariantNumeric: "tabular-nums" }}>{countdown}</div>
+          <div style={{ fontSize: TYPOGRAPHY.overline, fontWeight: 500, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", textTransform: "uppercase", letterSpacing: 1 }}>Results in</div>
+          <div style={{ fontSize: TYPOGRAPHY.caption, fontWeight: 700, color: GD_GOLD, fontFamily: "'Inter', sans-serif", fontVariantNumeric: "tabular-nums" }}>{countdown}</div>
         </div>
       </GlassCard>
     </div>
@@ -781,7 +782,7 @@ const ShufflePhase: React.FC<{ frame: number }> = ({ frame }) => {
         position: "absolute", top: 20, left: 0, right: 0, textAlign: "center", zIndex: 10,
         opacity: interpolate(frameInPhase, [0, 30], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
       }}>
-        <div style={{ fontSize: 18, fontWeight: 700, color: GD_ACCENT, fontFamily: "'Inter', sans-serif", letterSpacing: 2, textTransform: "uppercase" }}>
+        <div style={{ fontSize: TYPOGRAPHY.bodySmall, fontWeight: 700, color: GD_ACCENT, fontFamily: "'Inter', sans-serif", letterSpacing: 2, textTransform: "uppercase" }}>
           Calculating Winners...
         </div>
       </div>
@@ -822,10 +823,10 @@ const ShufflePhase: React.FC<{ frame: number }> = ({ frame }) => {
                 justifyContent: "flex-end", height: "100%", opacity: barOpacity,
               }}>
                 {/* Flag */}
-                <div style={{ fontSize: 28, marginBottom: 6, filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.5))" }}>{group.flag}</div>
+                <div style={{ fontSize: TYPOGRAPHY.h5, marginBottom: 6, filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.5))" }}>{group.flag}</div>
                 {/* Team name — wraps, no truncation */}
                 <div style={{
-                  fontSize: 14, fontWeight: 700, color: "rgba(255,255,255,0.9)",
+                  fontSize: TYPOGRAPHY.captionSmall, fontWeight: 700, color: "rgba(255,255,255,0.9)",
                   fontFamily: "'Inter', sans-serif", textAlign: "center",
                   marginBottom: 8, lineHeight: 1.3, width: SHUFFLE_BAR_WIDTH - 8,
                   wordWrap: "break-word", overflowWrap: "break-word",
@@ -839,7 +840,7 @@ const ShufflePhase: React.FC<{ frame: number }> = ({ frame }) => {
                   position: "relative",
                 }}>
                   <div style={{
-                    fontSize: 18, fontWeight: 800, color: "white", fontFamily: "'Inter', sans-serif",
+                    fontSize: TYPOGRAPHY.bodySmall, fontWeight: 800, color: "white", fontFamily: "'Inter', sans-serif",
                     fontVariantNumeric: "tabular-nums", textShadow: "0 1px 4px rgba(0,0,0,0.6)",
                   }}>{Math.round(group.score)}</div>
                 </div>
@@ -876,13 +877,13 @@ const TeamRevealCard: React.FC<{ team: TeamData; rank: number; frame: number; re
           </div>
         ) : (
           <div style={{ width: "100%", aspectRatio: "600 / 337", borderRadius: "16px 16px 0 0", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", background: `linear-gradient(135deg, ${GD_PURPLE}40, ${GD_DARK})` }}>
-            <div style={{ fontSize: 72, filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.4))" }}>{team.flag}</div>
+            <div style={{ fontSize: TYPOGRAPHY.h2, filter: "drop-shadow(0 4px 12px rgba(0,0,0,0.4))" }}>{team.flag}</div>
           </div>
         )}
         <div style={{ padding: "8px 14px", display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: "white", textAlign: "center", fontFamily: "'Inter', sans-serif", lineHeight: 1.2 }}>{team.flag} {team.name}</div>
-          <div style={{ fontSize: 11, color: "#94a3b8", fontFamily: "'Inter', sans-serif" }}>{team.city}</div>
-          <div style={{ marginTop: 4, fontSize: 22, fontWeight: 800, color: rank === 1 ? GD_GOLD : "white", textAlign: "center", fontFamily: "'Inter', sans-serif", fontVariantNumeric: "tabular-nums" }}>{displayScore.toLocaleString()}</div>
+          <div style={{ fontSize: TYPOGRAPHY.captionSmall, fontWeight: 700, color: "white", textAlign: "center", fontFamily: "'Inter', sans-serif", lineHeight: 1.2 }}>{team.flag} {team.name}</div>
+          <div style={{ fontSize: TYPOGRAPHY.overline, color: "#94a3b8", fontFamily: "'Inter', sans-serif" }}>{team.city}</div>
+          <div style={{ marginTop: 4, fontSize: TYPOGRAPHY.h6, fontWeight: 800, color: rank === 1 ? GD_GOLD : "white", textAlign: "center", fontFamily: "'Inter', sans-serif", fontVariantNumeric: "tabular-nums" }}>{displayScore.toLocaleString()}</div>
         </div>
         <div style={{ height: 2, background: `linear-gradient(90deg, transparent, ${borderColor}60, transparent)` }} />
       </div>
@@ -917,13 +918,13 @@ export const TeamPodiumReveal: React.FC<{ frame: number }> = ({ frame }) => {
         boxShadow: rank === 1 ? `0 0 40px ${GD_GOLD}30, inset 0 1px 0 ${GD_GOLD}20` : `0 8px 32px rgba(0,0,0,0.4)`,
       }}>
         <div style={{
-          fontSize: isTop ? 32 : 22,
+          fontSize: isTop ? TYPOGRAPHY.h5 : TYPOGRAPHY.h6,
           fontWeight: 900,
           color: GD_GOLD,
           fontFamily: "'Inter', sans-serif",
         }}>#{rank}</div>
         <div style={{
-          fontSize: isTop ? 11 : 10,
+          fontSize: isTop ? TYPOGRAPHY.overline : TYPOGRAPHY.overline,
           fontWeight: 600,
           color: "rgba(255,255,255,0.5)",
           fontFamily: "'Inter', sans-serif",
@@ -931,7 +932,7 @@ export const TeamPodiumReveal: React.FC<{ frame: number }> = ({ frame }) => {
           letterSpacing: 2,
         }}>Team</div>
         <div style={{
-          fontSize: isTop ? 16 : 13,
+          fontSize: isTop ? TYPOGRAPHY.caption : TYPOGRAPHY.label,
           fontWeight: 700,
           color: "white",
           fontFamily: "'Inter', sans-serif",
@@ -939,7 +940,7 @@ export const TeamPodiumReveal: React.FC<{ frame: number }> = ({ frame }) => {
           lineHeight: 1.3,
         }}>{team.name}</div>
         <div style={{
-          fontSize: isTop ? 28 : 20,
+          fontSize: isTop ? TYPOGRAPHY.h5 : TYPOGRAPHY.body,
           fontWeight: 900,
           color: scoreColor,
           fontFamily: "'Inter', sans-serif",
@@ -961,7 +962,7 @@ export const TeamPodiumReveal: React.FC<{ frame: number }> = ({ frame }) => {
     >
       {/* Title */}
       <div style={{
-        fontSize: 32,
+        fontSize: TYPOGRAPHY.h5,
         fontWeight: 900,
         color: GD_GOLD,
         fontFamily: "'Inter', sans-serif",
@@ -1029,7 +1030,7 @@ const RevealPhase: React.FC<{ frame: number }> = ({ frame }) => {
     const entryProgress = spring({ frame: frame - FULL_PODIUM_FRAME, fps, config: springConfig.entry });
     return (
       <AbsoluteFill style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px 40px", opacity: entryProgress }}>
-        <div style={{ fontSize: 28, fontWeight: 800, color: GD_GOLD, fontFamily: "'Inter', sans-serif", marginBottom: 16, textShadow: "0 2px 12px rgba(0,0,0,0.5)", textAlign: "center" }}>🏆 Final Standings</div>
+        <div style={{ fontSize: TYPOGRAPHY.h5, fontWeight: 800, color: GD_GOLD, fontFamily: "'Inter', sans-serif", marginBottom: 16, textShadow: "0 2px 12px rgba(0,0,0,0.5)", textAlign: "center" }}>🏆 Final Standings</div>
         {/* Top Row: positions 1, 2, 3 */}
         <div style={{ display: "flex", justifyContent: "center", gap: 20, marginBottom: 20 }}>
           {topRow.map((rank) => {
@@ -1077,7 +1078,7 @@ const RevealPhase: React.FC<{ frame: number }> = ({ frame }) => {
   return (
     <AbsoluteFill style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px 40px" }}>
       <div style={{
-        fontSize: 20, fontWeight: 700, fontFamily: "'Inter', sans-serif", marginBottom: 8, opacity: cardProgress, textShadow: "0 2px 8px rgba(0,0,0,0.5)",
+        fontSize: TYPOGRAPHY.body, fontWeight: 700, fontFamily: "'Inter', sans-serif", marginBottom: 8, opacity: cardProgress, textShadow: "0 2px 8px rgba(0,0,0,0.5)",
         color: currentRank === 1 ? GD_GOLD : currentRank === 2 ? "#C0C0C0" : currentRank === 3 ? "#CD7F32" : "rgba(255,255,255,0.7)",
       }}>
         {currentRank === 1 ? "🥇 1st Place" : currentRank === 2 ? "🥈 2nd Place" : currentRank === 3 ? "🥉 3rd Place" : `#${currentRank}`}
@@ -1100,11 +1101,11 @@ const RevealPhase: React.FC<{ frame: number }> = ({ frame }) => {
             const barProgress = spring({ frame: frame - revealFrame, fps, config: springConfig.entry });
             return (
               <div key={rank} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, opacity: Math.min(1, barProgress) }}>
-                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.8)", fontFamily: "'Inter', sans-serif", textAlign: "center", maxWidth: 100, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{team.flag} {team.name}</div>
+                <div style={{ fontSize: TYPOGRAPHY.overline, color: "rgba(255,255,255,0.8)", fontFamily: "'Inter', sans-serif", textAlign: "center", maxWidth: 100, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{team.flag} {team.name}</div>
                 <div style={{ width: 80, height: barHeight * barProgress, background: `linear-gradient(180deg, ${GD_ACCENT}50, ${GD_PURPLE}60)`, borderRadius: 6, display: "flex", alignItems: "flex-end", justifyContent: "center", paddingBottom: 4, border: `1px solid ${GD_ACCENT}20`, borderBottom: "none" }}>
-                  <div style={{ fontSize: 10, fontWeight: 700, color: "white", fontFamily: "'Inter', sans-serif", fontVariantNumeric: "tabular-nums" }}>{team.score.toLocaleString()}</div>
+                  <div style={{ fontSize: TYPOGRAPHY.overline, fontWeight: 700, color: "white", fontFamily: "'Inter', sans-serif", fontVariantNumeric: "tabular-nums" }}>{team.score.toLocaleString()}</div>
                 </div>
-                <div style={{ fontSize: 10, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif" }}>#{rank}</div>
+                <div style={{ fontSize: TYPOGRAPHY.overline, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif" }}>#{rank}</div>
               </div>
             );
           })}
@@ -1134,17 +1135,17 @@ const ThankYouPhase: React.FC<{ frame: number }> = ({ frame }) => {
       }} />
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 24 }}>
         <div style={{
-          fontSize: 22, color: GD_ACCENT, fontWeight: 500, letterSpacing: 4, textTransform: "uppercase",
+          fontSize: TYPOGRAPHY.h6, color: GD_ACCENT, fontWeight: 500, letterSpacing: 4, textTransform: "uppercase",
           opacity: subtitleSpring, transform: `translateY(${interpolate(subtitleSpring, [0, 1], [20, 0])}px)`,
           fontFamily: "'Inter', sans-serif",
         }}>AWS Community GameDay Europe</div>
         <div style={{
-          fontSize: 80, fontWeight: 800, color: "white", textAlign: "center",
+          fontSize: TYPOGRAPHY.stat, fontWeight: 800, color: "white", textAlign: "center",
           opacity: titleSpring, transform: `translateY(${interpolate(titleSpring, [0, 1], [30, 0])}px) scale(${interpolate(titleSpring, [0, 1], [0.85, 1])})`,
           fontFamily: "'Inter', sans-serif", textShadow: `0 0 60px ${GD_VIOLET}40`,
         }}>Thank You</div>
         <div style={{
-          fontSize: 22, color: "rgba(255,255,255,0.6)", fontWeight: 400,
+          fontSize: TYPOGRAPHY.h6, color: "rgba(255,255,255,0.6)", fontWeight: 400,
           opacity: closingSpring, transform: `translateY(${interpolate(closingSpring, [0, 1], [15, 0])}px)`,
           fontFamily: "'Inter', sans-serif",
         }}>See you at the next GameDay!</div>

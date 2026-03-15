@@ -22,6 +22,27 @@ export const GAME_START = 60; // 18:30 CET — GameDay game begins
 export const GAME_END = 180; // 20:30 CET — Game ends, closing ceremony
 export const EVENT_END = 210; // 21:00 CET — Stream ends with music
 
+// ── Typography Scale ──
+export const TYPOGRAPHY = {
+  h1: 104,
+  h2: 72,
+  h3: 42,
+  h4: 36,
+  h5: 28,
+  h6: 24,
+  body: 20,
+  bodySmall: 18,
+  caption: 16,
+  captionSmall: 14,
+  label: 13,
+  labelSmall: 12,
+  overline: 11,
+  stat: 80,
+  timer: 64,
+  timerSmall: 56,
+  flag: 48,
+} as const;
+
 // ── Spring Animation Presets ──
 export const springConfig = {
   entry: { damping: 12, stiffness: 100 },
