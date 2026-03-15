@@ -3,7 +3,14 @@ import { Composition } from "remotion";
 import { GameDayPreShow } from "../00-GameDayStreamPreShow-Muted";
 import { GameDayMainEvent } from "../01-GameDayStreamMainEvent-Audio";
 import { GameDayGameplay } from "../02-GameDayStreamGameplay-Muted";
-import { GameDayClosing } from "../03-GameDayStreamClosing-Audio";
+import {
+  GameDayClosing,
+  ClosingShowcase,
+  ClosingReveal,
+  ClosingFinalStandings,
+  ClosingTeamPodium,
+  ClosingThankYou,
+} from "../03-GameDayStreamClosing-Audio";
 export const RemotionRoot: React.FC = () => {
   return (
     <>
@@ -61,6 +68,56 @@ export const RemotionRoot: React.FC = () => {
         id="GameDayClosing"
         component={GameDayClosing}
         durationInFrames={27000}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+
+      {/* 3a. Closing — Showcase Phase (Hero Intro + Fast Scroll): frames 0–7199 */}
+      <Composition
+        id="Closing-Showcase"
+        component={ClosingShowcase}
+        durationInFrames={7200}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+
+      {/* 3b. Closing — Full Reveal Phase: frames 9000–17999 */}
+      <Composition
+        id="Closing-Reveal"
+        component={ClosingReveal}
+        durationInFrames={9000}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+
+      {/* 3c. Closing — Final Standings (3+3 layout): frames 13500–14999 */}
+      <Composition
+        id="Closing-FinalStandings"
+        component={ClosingFinalStandings}
+        durationInFrames={1500}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+
+      {/* 3d. Closing — Team Podium Reveal: frames 15000–17999 */}
+      <Composition
+        id="Closing-TeamPodium"
+        component={ClosingTeamPodium}
+        durationInFrames={3000}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+
+      {/* 3e. Closing — Thank You Phase: frames 18000–26999 */}
+      <Composition
+        id="Closing-ThankYou"
+        component={ClosingThankYou}
+        durationInFrames={9000}
         fps={30}
         width={1280}
         height={720}

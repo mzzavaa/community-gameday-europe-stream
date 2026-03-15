@@ -21,6 +21,7 @@ import {
   GD_VIOLET,
   GD_PINK,
   GD_ACCENT,
+  GD_ORANGE,
 } from "./shared/GameDayDesignSystem";
 import { USER_GROUPS, LOGO_MAP } from "./archive/CommunityGamedayEuropeV4";
 
@@ -68,6 +69,9 @@ export const PHASE_BOUNDARY_FRAMES = [0, 7200, 9000, 18000];
 export const FADE_START = 26910;
 export const FADE_END = 26999;
 export const FULL_PODIUM_FRAME = 13500;
+export const TEAM_PODIUM_FRAME = 15000;
+export const TOP_CARD_WIDTH = 280;
+export const BOTTOM_CARD_WIDTH = 220;
 
 // ── Showcase Sub-Phase Timing ──
 const HERO_INTRO_END = 899;
@@ -92,6 +96,16 @@ export const PODIUM_TEAMS: TeamData[] = [
   { name: "AWS User Group Warsaw", flag: "🇵🇱", city: "Warsaw Poland", score: 4090, logoUrl: LOGO_MAP["AWS User Group Warsaw"] ?? null },
 ];
 
+// ── Winning City Teams (Top 6 teams from Vienna, ordered by score descending) ──
+export const WINNING_CITY_TEAMS: TeamData[] = [
+  { name: "Team Alpha", flag: "🇦🇹", city: "Vienna Austria", score: 17320, logoUrl: LOGO_MAP["AWS User Group Vienna"] ?? null },
+  { name: "Team Bravo", flag: "🇦🇹", city: "Vienna Austria", score: 16890, logoUrl: LOGO_MAP["AWS User Group Vienna"] ?? null },
+  { name: "Team Charlie", flag: "🇦🇹", city: "Vienna Austria", score: 15740, logoUrl: LOGO_MAP["AWS User Group Vienna"] ?? null },
+  { name: "Team Delta", flag: "🇦🇹", city: "Vienna Austria", score: 14200, logoUrl: LOGO_MAP["AWS User Group Vienna"] ?? null },
+  { name: "Team Echo", flag: "🇦🇹", city: "Vienna Austria", score: 13650, logoUrl: LOGO_MAP["AWS User Group Vienna"] ?? null },
+  { name: "Team Foxtrot", flag: "🇦🇹", city: "Vienna Austria", score: 12980, logoUrl: LOGO_MAP["AWS User Group Vienna"] ?? null },
+];
+
 // ── Reveal Schedule ──
 export const REVEAL_SCHEDULE = [
   { rank: 6, frame: 9000, duration: 600 },
@@ -101,6 +115,40 @@ export const REVEAL_SCHEDULE = [
   { rank: 2, frame: 11700, duration: 900 },
   { rank: 1, frame: 12600, duration: 900 },
 ];
+
+// ── Position Label ──
+export function getPositionLabelText(rank: number): string {
+  const medal = rank === 1 ? "🥇" : rank === 2 ? "🥈" : rank === 3 ? "🥉" : null;
+  return medal ? `${medal} #${rank}` : `#${rank}`;
+}
+
+export const PositionLabel: React.FC<{ rank: number }> = ({ rank }) => {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        top: 8,
+        left: 8,
+        zIndex: 10,
+        background: "rgba(0,0,0,0.6)",
+        backdropFilter: "blur(8px)",
+        borderRadius: 8,
+        padding: "2px 8px",
+        fontSize: 12,
+        fontWeight: 700,
+        color: "white",
+        fontFamily: "'Inter', sans-serif",
+      }}
+    >
+      {getPositionLabelText(rank)}
+    </div>
+  );
+};
+
+// ── Podium Bar Height ──
+export function getPodiumBarHeight(teamScore: number, maxScore: number, maxBarHeight: number): number {
+  return Math.max(0.4, teamScore / maxScore) * maxBarHeight;
+}
 
 // ── Pure Utility Functions ──
 export function getActivePhase(frame: number): Phase {
@@ -185,72 +233,297 @@ const CountUp: React.FC<{ target: number; frame: number; startFrame: number; suf
   return <>{value}{suffix}</>;
 };
 
-// ── HeroIntro (frames 0-899): Epic intro with logos, stats, badge ──
+// ── HeroIntro (frames 0-899): Multi-scene epic closing ceremony intro ──
+// Scene 1 (0-179): "WHAT. A. DAY." dramatic text + GameDay logo
+// Scene 2 (180-379): Big stats cascade — 53 groups, 23+ countries, 2 hours
+// Scene 3 (380-549): Flag parade — all unique country flags
+// Scene 4 (550-699): Organizer shoutout — Jerome & Anda
+// Scene 5 (700-899): "AND NOW... THE RESULTS" dramatic transition
+
+const UNIQUE_FLAGS = Array.from(new Set(USER_GROUPS.map((g) => g.flag)));
+
+const ORGANIZERS = [
+  { name: "Jerome", role: "AWS User Group Belgium", city: "Brussels", flag: "🇧🇪", face: "AWSCommunityGameDayEurope/faces/jerome.jpg", type: "community" as const },
+  { name: "Anda", role: "AWS User Group Geneva", city: "Geneva", flag: "🇨🇭", face: "AWSCommunityGameDayEurope/faces/anda.jpg", type: "community" as const },
+  { name: "Marcel", role: "AWS User Group Münsterland", city: "Münsterland", flag: "🇩🇪", face: "AWSCommunityGameDayEurope/faces/marcel.jpg", type: "community" as const },
+  { name: "Linda", role: "AWS User Group Vienna", city: "Vienna", flag: "🇦🇹", face: "AWSCommunityGameDayEurope/faces/linda.jpg", type: "community" as const },
+  { name: "Manuel", role: "AWS User Group Frankfurt", city: "Frankfurt", flag: "🇩🇪", face: "AWSCommunityGameDayEurope/faces/manuel.jpg", type: "community" as const },
+  { name: "Andreas", role: "AWS User Group Bonn", city: "Bonn", flag: "🇩🇪", face: "AWSCommunityGameDayEurope/faces/andreas.jpg", type: "community" as const },
+  { name: "Lucian", role: "AWS User Group Timisoara", city: "Timisoara", flag: "🇷🇴", face: "AWSCommunityGameDayEurope/faces/lucian.jpg", type: "community" as const },
+  { name: "Mihaly", role: "AWS User Group Budapest", city: "Budapest", flag: "🇭🇺", face: "AWSCommunityGameDayEurope/faces/mihaly.jpg", type: "community" as const },
+];
+
 const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
   const { fps } = useVideoConfig();
-  const titleSpring = spring({ frame: Math.max(0, frame - 5), fps, config: { damping: 14, stiffness: 120 } });
-  const dateOpacity = interpolate(frame, [35, 55], [0, 1], { extrapolateRight: "clamp", extrapolateLeft: "clamp" });
-  const statsOpacity = interpolate(frame, [55, 75], [0, 1], { extrapolateRight: "clamp", extrapolateLeft: "clamp" });
-  const badgeSpring = spring({ frame: Math.max(0, frame - 70), fps, config: { damping: 14, stiffness: 120 } });
-  const glowPulse = interpolate(frame, [0, 60, 120], [0.3, 0.7, 0.3], { extrapolateRight: "clamp" });
-  const exitOpacity = interpolate(frame, [820, 899], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  // Global exit fade
+  const exitOpacity = interpolate(frame, [850, 899], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  // Ambient glow that shifts through scenes
+  const glowHue = interpolate(frame, [0, 450, 899], [270, 320, 280]);
+  const glowPulse = Math.sin(frame * 0.04) * 0.15 + 0.5;
+
+  // ── SCENE 1: "WHAT. A. DAY." (frames 0-179) ──
+  const s1Opacity = interpolate(frame, [0, 10, 160, 179], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const word1Spring = spring({ frame: Math.max(0, frame - 8), fps, config: { damping: 10, stiffness: 150 } });
+  const word2Spring = spring({ frame: Math.max(0, frame - 22), fps, config: { damping: 10, stiffness: 150 } });
+  const word3Spring = spring({ frame: Math.max(0, frame - 36), fps, config: { damping: 10, stiffness: 150 } });
+  const logoFade = interpolate(frame, [50, 70], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const dateFade = interpolate(frame, [70, 90], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const subtitleFade = interpolate(frame, [90, 110], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  // ── SCENE 2: Stats cascade (frames 180-379) ──
+  const s2Opacity = interpolate(frame, [180, 195, 360, 379], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const STATS = [
+    { value: 53, label: "USER GROUPS", suffix: "+", delay: 190 },
+    { value: COUNTRIES.length, label: "COUNTRIES", suffix: "+", delay: 210 },
+    { value: 2, label: "HOURS OF GAMEPLAY", suffix: "", delay: 230 },
+    { value: 1, label: "EPIC DAY", suffix: "", delay: 250 },
+    { value: 4, label: "TIMEZONES", suffix: "+", delay: 270 },
+  ];
+
+  // ── SCENE 3: Flag parade (frames 380-549) ──
+  const s3Opacity = interpolate(frame, [380, 395, 530, 549], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const flagTitleSpring = spring({ frame: Math.max(0, frame - 385), fps, config: { damping: 14, stiffness: 120 } });
+
+  // ── SCENE 4: Organizers (frames 550-699) ──
+  const s4Opacity = interpolate(frame, [550, 565, 680, 699], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const orgTitleSpring = spring({ frame: Math.max(0, frame - 555), fps, config: { damping: 14, stiffness: 120 } });
+
+  // ── SCENE 5: "AND NOW... THE RESULTS" (frames 700-899) ──
+  const s5Opacity = interpolate(frame, [700, 715, 850, 899], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const andNowSpring = spring({ frame: Math.max(0, frame - 710), fps, config: { damping: 12, stiffness: 100 } });
+  const resultsSpring = spring({ frame: Math.max(0, frame - 750), fps, config: { damping: 8, stiffness: 120 } });
+  const resultsPulse = frame >= 760 ? Math.sin((frame - 760) * 0.08) * 0.08 + 1 : 1;
+  const meetBadgeSpring = spring({ frame: Math.max(0, frame - 790), fps, config: { damping: 14, stiffness: 120 } });
 
   return (
     <AbsoluteFill style={{ opacity: exitOpacity }}>
+      {/* Ambient glow */}
       <div style={{
-        position: "absolute", top: "50%", left: "50%", width: 800, height: 800,
+        position: "absolute", top: "50%", left: "50%", width: 900, height: 900,
         transform: "translate(-50%, -50%)",
-        background: `radial-gradient(circle, ${GD_PURPLE}${Math.round(glowPulse * 40).toString(16).padStart(2, "0")} 0%, transparent 70%)`,
-        borderRadius: "50%",
+        background: `radial-gradient(circle, hsl(${glowHue}, 70%, 30%) 0%, transparent 70%)`,
+        opacity: glowPulse, borderRadius: "50%", pointerEvents: "none",
       }} />
-      <div style={{
-        position: "absolute", top: 45, left: 0, right: 0, display: "flex", justifyContent: "center",
-        opacity: interpolate(frame, [0, 20], [0, 0.9], { extrapolateRight: "clamp" }),
-      }}>
-        <Img src={staticFile("AWSCommunityGameDayEurope/GameDay_Solid_Logo_for_swag/GameDay Logo Solid White.png")} style={{ height: 80 }} />
-      </div>
-      <div style={{
-        position: "absolute", top: 145, left: 0, right: 0, display: "flex", flexDirection: "column", alignItems: "center",
-        transform: `translateY(${interpolate(titleSpring, [0, 1], [40, 0])}px)`, opacity: titleSpring,
-      }}>
-        <Img src={staticFile("AWSCommunityGameDayEurope/AWSCommunityEurope_last_nobackground.png")} style={{ height: 160 }} />
-        <div style={{
-          fontSize: 42, fontWeight: 900, letterSpacing: 4, textTransform: "uppercase",
-          fontFamily: "'Inter', sans-serif", marginTop: 12,
-          background: `linear-gradient(135deg, #ffffff 0%, ${GD_ACCENT} 50%, ${GD_PINK} 100%)`,
-          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
-        }}>GAMEDAY EUROPE</div>
-      </div>
-      <div style={{ position: "absolute", top: 405, left: 0, right: 0, textAlign: "center", opacity: dateOpacity }}>
-        <span style={{ fontSize: 22, fontWeight: 600, color: GD_PINK, fontFamily: "'Inter', sans-serif" }}>17 March 2026</span>
-      </div>
-      <div style={{ position: "absolute", top: 460, left: 80, right: 80, display: "flex", justifyContent: "center", gap: 80, opacity: statsOpacity }}>
-        {[
-          { label: "User Groups", value: 53, suffix: "", start: 60, isCountUp: true },
-          { label: "Countries", value: COUNTRIES.length, suffix: "+", start: 65, isCountUp: true },
-          { label: "One Epic Day", value: 1, suffix: "", start: 70, isCountUp: false },
-        ].map((stat) => (
-          <div key={stat.label} style={{ textAlign: "center" }}>
-            <div style={{ fontSize: 48, fontWeight: 800, color: "#ffffff", fontFamily: "'Inter', sans-serif" }}>
-              {stat.isCountUp ? <CountUp target={stat.value} frame={frame} startFrame={stat.start} suffix={stat.suffix} /> : <>{stat.value}{stat.suffix}</>}
-            </div>
-            <div style={{ fontSize: 12, color: "#94a3b8", marginTop: 4, textTransform: "uppercase", letterSpacing: 2, fontFamily: "'Inter', sans-serif" }}>{stat.label}</div>
+
+      {/* ── SCENE 1: "WHAT. A. DAY." ── */}
+      {frame < 180 && (
+        <AbsoluteFill style={{ opacity: s1Opacity }}>
+          {/* GameDay logo top */}
+          <div style={{ position: "absolute", top: 30, left: 0, right: 0, display: "flex", justifyContent: "center", opacity: logoFade }}>
+            <Img src={staticFile("AWSCommunityGameDayEurope/GameDay_Solid_Logo_for_swag/GameDay Logo Solid White.png")} style={{ height: 60 }} />
           </div>
-        ))}
-      </div>
-      <div style={{
-        position: "absolute", bottom: 60, left: 0, right: 0, display: "flex", justifyContent: "center",
-        opacity: badgeSpring, transform: `scale(${interpolate(badgeSpring, [0, 1], [0.8, 1])})`,
-      }}>
-        <div style={{
-          background: `linear-gradient(135deg, #4f46e5, ${GD_PINK})`, borderRadius: 12, padding: "10px 28px",
-          fontSize: 14, fontWeight: 700, color: "#ffffff", fontFamily: "'Inter', sans-serif", letterSpacing: 1,
-          display: "flex", alignItems: "center",
-        }}>
-          <Img src={staticFile("AWSCommunityGameDayEurope/GameDay_Solid_Logo_for_swag/GameDay Logo Solid White.png")} style={{ height: 24, marginRight: 8 }} />
-          Meet the Participating Communities
-        </div>
-      </div>
+          {/* Big dramatic words */}
+          <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -55%)", display: "flex", gap: 20, alignItems: "baseline" }}>
+            {[
+              { text: "WHAT", spring: word1Spring, color: "#ffffff" },
+              { text: "A", spring: word2Spring, color: GD_ACCENT },
+              { text: "DAY", spring: word3Spring, color: GD_PINK },
+            ].map((w) => (
+              <div key={w.text} style={{
+                fontSize: 96, fontWeight: 900, fontFamily: "'Inter', sans-serif", letterSpacing: 6,
+                color: w.color, opacity: w.spring,
+                transform: `translateY(${interpolate(w.spring, [0, 1], [60, 0])}px) scale(${interpolate(w.spring, [0, 1], [0.7, 1])})`,
+                textShadow: `0 0 40px ${w.color}40, 0 4px 20px rgba(0,0,0,0.5)`,
+              }}>{w.text}.</div>
+            ))}
+          </div>
+          {/* Date */}
+          <div style={{ position: "absolute", top: "58%", left: 0, right: 0, textAlign: "center", opacity: dateFade }}>
+            <span style={{ fontSize: 22, fontWeight: 600, color: GD_GOLD, fontFamily: "'Inter', sans-serif", letterSpacing: 3 }}>17 MARCH 2026</span>
+          </div>
+          {/* Subtitle */}
+          <div style={{ position: "absolute", top: "65%", left: 0, right: 0, textAlign: "center", opacity: subtitleFade }}>
+            <span style={{ fontSize: 16, fontWeight: 400, color: "rgba(255,255,255,0.6)", fontFamily: "'Inter', sans-serif", letterSpacing: 2 }}>
+              THE FIRST AWS COMMUNITY GAMEDAY EUROPE
+            </span>
+          </div>
+        </AbsoluteFill>
+      )}
+
+      {/* ── SCENE 2: Stats cascade ── */}
+      {frame >= 180 && frame < 380 && (
+        <AbsoluteFill style={{ opacity: s2Opacity }}>
+          <div style={{ position: "absolute", top: 50, left: 0, right: 0, textAlign: "center" }}>
+            <span style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", letterSpacing: 4, textTransform: "uppercase" }}>
+              TONIGHT WE MADE HISTORY
+            </span>
+          </div>
+          <div style={{
+            position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)",
+            display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "40px 60px", maxWidth: 1100,
+          }}>
+            {STATS.map((stat, i) => {
+              const statSpring = spring({ frame: Math.max(0, frame - stat.delay), fps, config: { damping: 12, stiffness: 120 } });
+              const accentColors = [GD_ACCENT, GD_VIOLET, GD_PINK, GD_GOLD, GD_ORANGE];
+              return (
+                <div key={stat.label} style={{
+                  textAlign: "center", opacity: statSpring,
+                  transform: `translateY(${interpolate(statSpring, [0, 1], [40, 0])}px)`,
+                }}>
+                  <div style={{
+                    fontSize: 72, fontWeight: 900, fontFamily: "'Inter', sans-serif",
+                    color: accentColors[i], lineHeight: 1,
+                    textShadow: `0 0 30px ${accentColors[i]}50`,
+                  }}>
+                    <CountUp target={stat.value} frame={frame} startFrame={stat.delay} suffix={stat.suffix} />
+                  </div>
+                  <div style={{
+                    fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.5)", marginTop: 8,
+                    letterSpacing: 3, fontFamily: "'Inter', sans-serif",
+                  }}>{stat.label}</div>
+                </div>
+              );
+            })}
+          </div>
+        </AbsoluteFill>
+      )}
+
+      {/* ── SCENE 3: Flag parade ── */}
+      {frame >= 380 && frame < 550 && (
+        <AbsoluteFill style={{ opacity: s3Opacity }}>
+          <div style={{
+            position: "absolute", top: 80, left: 0, right: 0, textAlign: "center",
+            opacity: flagTitleSpring, transform: `translateY(${interpolate(flagTitleSpring, [0, 1], [20, 0])}px)`,
+          }}>
+            <div style={{ fontSize: 16, fontWeight: 600, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", letterSpacing: 4 }}>
+              THANK YOU TO EVERY
+            </div>
+            <div style={{
+              fontSize: 36, fontWeight: 900, fontFamily: "'Inter', sans-serif", marginTop: 8,
+              background: `linear-gradient(135deg, #ffffff, ${GD_ACCENT})`,
+              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+            }}>USER GROUP LEADER</div>
+          </div>
+          {/* Flag grid */}
+          <div style={{
+            position: "absolute", top: "42%", left: "50%", transform: "translateX(-50%)",
+            display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16, maxWidth: 900,
+          }}>
+            {UNIQUE_FLAGS.map((flag, i) => {
+              const flagSpring = spring({ frame: Math.max(0, frame - 395 - i * 3), fps, config: { damping: 14, stiffness: 120 } });
+              return (
+                <div key={i} style={{
+                  fontSize: 48, opacity: flagSpring,
+                  transform: `scale(${interpolate(flagSpring, [0, 1], [0.3, 1])}) translateY(${interpolate(flagSpring, [0, 1], [20, 0])}px)`,
+                  filter: `drop-shadow(0 4px 12px rgba(0,0,0,0.4))`,
+                }}>{flag}</div>
+              );
+            })}
+          </div>
+          {/* Bottom text */}
+          <div style={{
+            position: "absolute", bottom: 80, left: 0, right: 0, textAlign: "center",
+            opacity: interpolate(frame, [430, 450], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+          }}>
+            <span style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", letterSpacing: 2 }}>
+              {`VOLUNTEERS • ACROSS ALL ${COUNTRIES.length}+ PARTICIPATING COUNTRIES • PURE COMMUNITY SPIRIT`}
+            </span>
+          </div>
+        </AbsoluteFill>
+      )}
+
+      {/* ── SCENE 4: Organizer shoutout ── */}
+      {frame >= 550 && frame < 700 && (
+        <AbsoluteFill style={{ opacity: s4Opacity }}>
+          <div style={{
+            position: "absolute", top: 60, left: 0, right: 0, textAlign: "center",
+            opacity: orgTitleSpring, transform: `translateY(${interpolate(orgTitleSpring, [0, 1], [20, 0])}px)`,
+          }}>
+            <div style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", letterSpacing: 4 }}>
+              ORGANIZED BY
+            </div>
+            <div style={{
+              fontSize: 28, fontWeight: 800, fontFamily: "'Inter', sans-serif", marginTop: 6,
+              color: GD_GOLD,
+            }}>THE COMMUNITY, FOR THE COMMUNITY</div>
+          </div>
+          {/* Organizer cards */}
+          <div style={{
+            position: "absolute", top: "38%", left: "50%", transform: "translateX(-50%)",
+            display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "24px 32px", maxWidth: 1000,
+          }}>
+            {ORGANIZERS.map((org, i) => {
+              const cardSpring = spring({ frame: Math.max(0, frame - 565 - i * 15), fps, config: { damping: 12, stiffness: 100 } });
+              const borderColor = org.type === "community" ? GD_PURPLE : GD_ORANGE;
+              const glowColor = org.type === "community" ? GD_VIOLET : GD_ORANGE;
+              return (
+                <div key={org.name} style={{
+                  display: "flex", flexDirection: "column", alignItems: "center", gap: 12,
+                  opacity: cardSpring, transform: `translateY(${interpolate(cardSpring, [0, 1], [30, 0])}px)`,
+                }}>
+                  <div style={{
+                    width: 90, height: 90, borderRadius: "50%", overflow: "hidden",
+                    border: `3px solid ${borderColor}`, boxShadow: `0 0 20px ${glowColor}40, 0 4px 16px rgba(0,0,0,0.4)`,
+                  }}>
+                    <Img src={staticFile(org.face)} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                  </div>
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: 16, fontWeight: 800, color: "#ffffff", fontFamily: "'Inter', sans-serif" }}>
+                      {org.flag} {org.name}
+                    </div>
+                    <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", marginTop: 2 }}>
+                      {org.role}
+                    </div>
+                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.35)", fontFamily: "'Inter', sans-serif" }}>
+                      {org.city}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+
+        </AbsoluteFill>
+      )}
+
+      {/* ── SCENE 5: "AND NOW... THE RESULTS" ── */}
+      {frame >= 700 && (
+        <AbsoluteFill style={{ opacity: s5Opacity }}>
+          {/* Radial burst */}
+          <div style={{
+            position: "absolute", top: "50%", left: "50%", width: 1000, height: 1000,
+            transform: "translate(-50%, -50%)",
+            background: `radial-gradient(circle, ${GD_PURPLE}40 0%, ${GD_PINK}15 40%, transparent 70%)`,
+            borderRadius: "50%", opacity: resultsSpring,
+          }} />
+          <div style={{
+            position: "absolute", top: "32%", left: 0, right: 0, textAlign: "center",
+            opacity: andNowSpring, transform: `translateY(${interpolate(andNowSpring, [0, 1], [30, 0])}px)`,
+          }}>
+            <span style={{ fontSize: 24, fontWeight: 600, color: "rgba(255,255,255,0.6)", fontFamily: "'Inter', sans-serif", letterSpacing: 6 }}>
+              AND NOW...
+            </span>
+          </div>
+          <div style={{
+            position: "absolute", top: "44%", left: 0, right: 0, textAlign: "center",
+            opacity: resultsSpring,
+            transform: `scale(${resultsPulse * interpolate(resultsSpring, [0, 1], [0.6, 1])})`,
+          }}>
+            <div style={{
+              fontSize: 72, fontWeight: 900, fontFamily: "'Inter', sans-serif", letterSpacing: 8,
+              background: `linear-gradient(135deg, ${GD_GOLD} 0%, #ffffff 40%, ${GD_GOLD} 100%)`,
+              WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+              textShadow: "none", filter: `drop-shadow(0 0 30px ${GD_GOLD}40)`,
+            }}>THE RESULTS</div>
+          </div>
+          {/* "Meet the communities" badge */}
+          <div style={{
+            position: "absolute", bottom: 80, left: 0, right: 0, display: "flex", justifyContent: "center",
+            opacity: meetBadgeSpring, transform: `scale(${interpolate(meetBadgeSpring, [0, 1], [0.8, 1])})`,
+          }}>
+            <div style={{
+              background: `linear-gradient(135deg, #4f46e5, ${GD_PINK})`, borderRadius: 12, padding: "10px 28px",
+              fontSize: 14, fontWeight: 700, color: "#ffffff", fontFamily: "'Inter', sans-serif", letterSpacing: 1,
+              display: "flex", alignItems: "center",
+            }}>
+              <Img src={staticFile("AWSCommunityGameDayEurope/GameDay_Solid_Logo_for_swag/GameDay Logo Solid White.png")} style={{ height: 24, marginRight: 8 }} />
+              But first — meet the participating communities
+            </div>
+          </div>
+        </AbsoluteFill>
+      )}
     </AbsoluteFill>
   );
 };
@@ -544,28 +817,190 @@ const TeamRevealCard: React.FC<{ team: TeamData; rank: number; frame: number; re
   );
 };
 
+// ── Team Podium Reveal ──
+export const TeamPodiumReveal: React.FC<{ frame: number }> = ({ frame }) => {
+  const { fps } = useVideoConfig();
+  const phaseFrame = frame - TEAM_PODIUM_FRAME;
+  const entryProgress = spring({ frame: phaseFrame, fps, config: springConfig.entry });
+
+  const top3 = WINNING_CITY_TEAMS.slice(0, 3);
+  const maxScore = top3[0].score;
+  const MAX_BAR_HEIGHT = 180;
+
+  // Classic podium order: [2nd, 1st, 3rd] from left to right
+  const podiumOrder = [WINNING_CITY_TEAMS[1], WINNING_CITY_TEAMS[0], WINNING_CITY_TEAMS[2]];
+  const podiumRanks = [2, 1, 3];
+
+  return (
+    <AbsoluteFill
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "20px 40px",
+        opacity: entryProgress,
+      }}
+    >
+      {/* Title */}
+      <div
+        style={{
+          fontSize: 28,
+          fontWeight: 800,
+          color: GD_GOLD,
+          fontFamily: "'Inter', sans-serif",
+          marginBottom: 24,
+          textShadow: "0 2px 12px rgba(0,0,0,0.5)",
+          textAlign: "center",
+        }}
+      >
+        🏆 Team Podium — Vienna
+      </div>
+
+      {/* Podium Section: top 3 */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "flex-end",
+          gap: 24,
+        }}
+      >
+        {podiumOrder.map((team, i) => {
+          const rank = podiumRanks[i];
+          const barHeight = getPodiumBarHeight(team.score, maxScore, MAX_BAR_HEIGHT);
+          const borderColor =
+            rank === 1 ? GD_GOLD : rank === 2 ? "#C0C0C0" : "#CD7F32";
+
+          return (
+            <div
+              key={rank}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              {/* Card */}
+              <div
+                style={{
+                  position: "relative",
+                  width: TOP_CARD_WIDTH,
+                  filter:
+                    rank === 1
+                      ? `drop-shadow(0 0 20px ${GD_GOLD}80)`
+                      : "none",
+                }}
+              >
+                <PositionLabel rank={rank} />
+                <TeamRevealCard
+                  team={team}
+                  rank={rank}
+                  frame={frame}
+                  revealFrame={TEAM_PODIUM_FRAME}
+                />
+              </div>
+
+              {/* Podium Bar */}
+              <div
+                style={{
+                  width: TOP_CARD_WIDTH,
+                  height: barHeight,
+                  background: `linear-gradient(180deg, ${GD_ACCENT}, ${GD_PURPLE})`,
+                  borderRadius: "0 0 8px 8px",
+                  border: `1px solid ${borderColor}30`,
+                  borderTop: "none",
+                }}
+              />
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Bottom Row: positions 4, 5, 6 */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: 20,
+          marginTop: 24,
+        }}
+      >
+        {WINNING_CITY_TEAMS.slice(3, 6).map((team, i) => {
+          const rank = i + 4;
+          return (
+            <div
+              key={rank}
+              style={{
+                position: "relative",
+                width: BOTTOM_CARD_WIDTH,
+              }}
+            >
+              <PositionLabel rank={rank} />
+              <TeamRevealCard
+                team={team}
+                rank={rank}
+                frame={frame}
+                revealFrame={TEAM_PODIUM_FRAME}
+              />
+            </div>
+          );
+        })}
+      </div>
+    </AbsoluteFill>
+  );
+};
+
 // ── RevealPhase ──
 const RevealPhase: React.FC<{ frame: number }> = ({ frame }) => {
   const { fps } = useVideoConfig();
   const revealed = getRevealedPlacements(frame);
+  const isTeamPodium = frame >= TEAM_PODIUM_FRAME;
   const isFullPodium = frame >= FULL_PODIUM_FRAME;
   const currentReveal = REVEAL_SCHEDULE.slice().reverse().find((r) => frame >= r.frame);
   if (!currentReveal) return null;
 
+  if (isTeamPodium) {
+    return <TeamPodiumReveal frame={frame} />;
+  }
+
   if (isFullPodium) {
-    const podiumOrder = [1, 2, 3, 4, 5, 6];
+    const topRow = [1, 2, 3];
+    const bottomRow = [4, 5, 6];
     const entryProgress = spring({ frame: frame - FULL_PODIUM_FRAME, fps, config: springConfig.entry });
     return (
       <AbsoluteFill style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "20px 40px", opacity: entryProgress }}>
         <div style={{ fontSize: 28, fontWeight: 800, color: GD_GOLD, fontFamily: "'Inter', sans-serif", marginBottom: 16, textShadow: "0 2px 12px rgba(0,0,0,0.5)", textAlign: "center" }}>🏆 Final Standings</div>
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16, width: "100%", maxWidth: 1100 }}>
-          {podiumOrder.map((rank) => {
+        {/* Top Row: positions 1, 2, 3 */}
+        <div style={{ display: "flex", justifyContent: "center", gap: 20, marginBottom: 20 }}>
+          {topRow.map((rank) => {
             const team = PODIUM_TEAMS[rank - 1];
             const revealEntry = REVEAL_SCHEDULE.find((r) => r.rank === rank);
             const revealFrame = revealEntry?.frame ?? FULL_PODIUM_FRAME;
-            const isFirst = rank === 1;
             return (
-              <div key={rank} style={{ width: isFirst ? 220 : 180, transform: isFirst ? "scale(1.08)" : "scale(1)", filter: isFirst ? `drop-shadow(0 0 20px ${GD_GOLD}80)` : "none" }}>
+              <div key={rank} style={{
+                position: "relative",
+                width: TOP_CARD_WIDTH,
+                filter: rank === 1 ? `drop-shadow(0 0 20px ${GD_GOLD}80)` : "none",
+              }}>
+                <PositionLabel rank={rank} />
+                <TeamRevealCard team={team} rank={rank} frame={frame} revealFrame={revealFrame} />
+              </div>
+            );
+          })}
+        </div>
+        {/* Bottom Row: positions 4, 5, 6 */}
+        <div style={{ display: "flex", justifyContent: "center", gap: 20 }}>
+          {bottomRow.map((rank) => {
+            const team = PODIUM_TEAMS[rank - 1];
+            const revealEntry = REVEAL_SCHEDULE.find((r) => r.rank === rank);
+            const revealFrame = revealEntry?.frame ?? FULL_PODIUM_FRAME;
+            return (
+              <div key={rank} style={{
+                position: "relative",
+                width: BOTTOM_CARD_WIDTH,
+              }}>
+                <PositionLabel rank={rank} />
                 <TeamRevealCard team={team} rank={rank} frame={frame} revealFrame={revealFrame} />
               </div>
             );
@@ -692,6 +1127,68 @@ export const GameDayClosing: React.FC = () => {
         </AbsoluteFill>
       )}
       <AudioBadge muted={false} />
+    </AbsoluteFill>
+  );
+};
+
+// ── Standalone Sequences for Remotion Studio ──
+
+export const ClosingShowcase: React.FC = () => {
+  const frame = useCurrentFrame();
+  return (
+    <AbsoluteFill style={{ fontFamily: "'Inter', sans-serif", background: "#0c0820" }}>
+      <BackgroundLayer darken={0.65} />
+      <HexGridOverlay />
+      <ShowcasePhase frame={frame} />
+      <ResultsCountdown frame={frame} />
+    </AbsoluteFill>
+  );
+};
+
+export const ClosingReveal: React.FC = () => {
+  const frame = useCurrentFrame();
+  const offsetFrame = frame + 9000;
+  return (
+    <AbsoluteFill style={{ fontFamily: "'Inter', sans-serif", background: "#0c0820" }}>
+      <BackgroundLayer darken={0.65} />
+      <HexGridOverlay />
+      <RevealPhase frame={offsetFrame} />
+    </AbsoluteFill>
+  );
+};
+
+export const ClosingFinalStandings: React.FC = () => {
+  const frame = useCurrentFrame();
+  const offsetFrame = frame + FULL_PODIUM_FRAME;
+  return (
+    <AbsoluteFill style={{ fontFamily: "'Inter', sans-serif", background: "#0c0820" }}>
+      <BackgroundLayer darken={0.65} />
+      <HexGridOverlay />
+      <RevealPhase frame={offsetFrame} />
+    </AbsoluteFill>
+  );
+};
+
+export const ClosingTeamPodium: React.FC = () => {
+  const frame = useCurrentFrame();
+  const offsetFrame = frame + TEAM_PODIUM_FRAME;
+  return (
+    <AbsoluteFill style={{ fontFamily: "'Inter', sans-serif", background: "#0c0820" }}>
+      <BackgroundLayer darken={0.65} />
+      <HexGridOverlay />
+      <TeamPodiumReveal frame={offsetFrame} />
+    </AbsoluteFill>
+  );
+};
+
+export const ClosingThankYou: React.FC = () => {
+  const frame = useCurrentFrame();
+  const offsetFrame = frame + 18000;
+  return (
+    <AbsoluteFill style={{ fontFamily: "'Inter', sans-serif", background: "#0c0820" }}>
+      <BackgroundLayer darken={0.65} />
+      <HexGridOverlay />
+      <ThankYouPhase frame={offsetFrame} />
     </AbsoluteFill>
   );
 };
