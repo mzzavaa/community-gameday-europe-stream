@@ -4,7 +4,7 @@ export interface Organizer {
   country: string;
   flag: string;
   face: string;
-  type: "community";
+  type: "community" | "aws";
 }
 
 export const ORGANIZERS: Organizer[] = [
@@ -16,4 +16,10 @@ export const ORGANIZERS: Organizer[] = [
   { name: "Andreas", role: "AWS User Group Bonn", country: "Germany", flag: "🇩🇪", face: "AWSCommunityGameDayEurope/faces/andreas.jpg", type: "community" },
   { name: "Lucian", role: "AWS User Group Timisoara", country: "Romania", flag: "🇷🇴", face: "AWSCommunityGameDayEurope/faces/lucian.jpg", type: "community" },
   { name: "Mihaly", role: "AWS User Group Budapest", country: "Hungary", flag: "🇭🇺", face: "AWSCommunityGameDayEurope/faces/mihaly.jpg", type: "community" },
+];
+
+export const AWS_SUPPORTERS: Organizer[] = [
+  { name: "Arnaud", role: "Developer Advocate, AWS", country: "Gamemaster", flag: "🎮", face: "AWSCommunityGameDayEurope/faces/arnaud.jpg", type: "aws" },
+  { name: "Loïc", role: "Sr. Technical Account Manager, AWS", country: "Gamemaster", flag: "🎮", face: "AWSCommunityGameDayEurope/faces/loic.jpg", type: "aws" },
+  { name: "Uliana", role: "Community Manager, AWS", country: "DACH, CEE, CEAR & MENAT", flag: "🌍", face: "AWSCommunityGameDayEurope/faces/uliana.jpg", type: "aws" },
 ];
