@@ -223,7 +223,7 @@ The event spans 4+ timezones across Europe. All times below are CET — local ti
 - **Linda Mohamed** — Stream Host, AWS Community Hero, AWS & Women's UG Vienna
 - **Jerome** — Co-organizer, AWS User Group Belgium (Brussels)
 - **Anda** — Co-organizer, AWS User Group Geneva
-- **Jeff Barr** — Special Guest
+- **Special Guest** — To be revealed
 - **Arnaud & Loïc** — AWS Gamemasters (gameplay instructions)
 
 ## For the Community

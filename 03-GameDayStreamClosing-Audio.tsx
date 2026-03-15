@@ -136,7 +136,7 @@ export const PositionLabel: React.FC<{ rank: number }> = ({ rank }) => {
         backdropFilter: "blur(8px)",
         borderRadius: 8,
         padding: "2px 8px",
-        fontSize: 12,
+        fontSize: 16,
         fontWeight: 700,
         color: "white",
         fontFamily: "'Inter', sans-serif",
@@ -320,7 +320,7 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
               { text: "DAY", spring: word3Spring, color: GD_PINK },
             ].map((w) => (
               <div key={w.text} style={{
-                fontSize: 96, fontWeight: 900, fontFamily: "'Inter', sans-serif", letterSpacing: 6,
+                fontSize: 104, fontWeight: 900, fontFamily: "'Inter', sans-serif", letterSpacing: 6,
                 color: w.color, opacity: w.spring,
                 transform: `translateY(${interpolate(w.spring, [0, 1], [60, 0])}px) scale(${interpolate(w.spring, [0, 1], [0.7, 1])})`,
                 textShadow: `0 0 40px ${w.color}40, 0 4px 20px rgba(0,0,0,0.5)`,
@@ -329,11 +329,11 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
           </div>
           {/* Date */}
           <div style={{ position: "absolute", top: "58%", left: 0, right: 0, textAlign: "center", opacity: dateFade }}>
-            <span style={{ fontSize: 22, fontWeight: 600, color: GD_GOLD, fontFamily: "'Inter', sans-serif", letterSpacing: 3 }}>17 MARCH 2026</span>
+            <span style={{ fontSize: 28, fontWeight: 600, color: GD_GOLD, fontFamily: "'Inter', sans-serif", letterSpacing: 3 }}>17 MARCH 2026</span>
           </div>
           {/* Subtitle */}
           <div style={{ position: "absolute", top: "65%", left: 0, right: 0, textAlign: "center", opacity: subtitleFade }}>
-            <span style={{ fontSize: 16, fontWeight: 400, color: "rgba(255,255,255,0.6)", fontFamily: "'Inter', sans-serif", letterSpacing: 2 }}>
+            <span style={{ fontSize: 20, fontWeight: 400, color: "rgba(255,255,255,0.6)", fontFamily: "'Inter', sans-serif", letterSpacing: 2 }}>
               THE FIRST AWS COMMUNITY GAMEDAY EUROPE
             </span>
           </div>
@@ -344,7 +344,7 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
       {frame >= 160 && frame < 380 && (
         <AbsoluteFill style={{ opacity: s2Opacity }}>
           <div style={{ position: "absolute", top: 50, left: 0, right: 0, textAlign: "center" }}>
-            <span style={{ fontSize: 14, fontWeight: 600, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", letterSpacing: 4, textTransform: "uppercase" }}>
+            <span style={{ fontSize: 18, fontWeight: 600, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", letterSpacing: 4, textTransform: "uppercase" }}>
               TONIGHT WE MADE HISTORY
             </span>
           </div>
@@ -361,14 +361,14 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
                   transform: `translateY(${interpolate(statSpring, [0, 1], [40, 0])}px)`,
                 }}>
                   <div style={{
-                    fontSize: 72, fontWeight: 900, fontFamily: "'Inter', sans-serif",
+                    fontSize: 80, fontWeight: 900, fontFamily: "'Inter', sans-serif",
                     color: accentColors[i], lineHeight: 1,
                     textShadow: `0 0 30px ${accentColors[i]}50`,
                   }}>
                     <CountUp target={stat.value} frame={frame} startFrame={stat.delay} suffix={stat.suffix} />
                   </div>
                   <div style={{
-                    fontSize: 13, fontWeight: 600, color: "rgba(255,255,255,0.5)", marginTop: 8,
+                    fontSize: 17, fontWeight: 600, color: "rgba(255,255,255,0.5)", marginTop: 8,
                     letterSpacing: 3, fontFamily: "'Inter', sans-serif",
                   }}>{stat.label}</div>
                 </div>
@@ -385,11 +385,11 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
             position: "absolute", top: 80, left: 0, right: 0, textAlign: "center",
             opacity: flagTitleSpring, transform: `translateY(${interpolate(flagTitleSpring, [0, 1], [20, 0])}px)`,
           }}>
-            <div style={{ fontSize: 16, fontWeight: 600, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", letterSpacing: 4 }}>
+            <div style={{ fontSize: 20, fontWeight: 600, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", letterSpacing: 4 }}>
               THANK YOU TO EVERY
             </div>
             <div style={{
-              fontSize: 36, fontWeight: 900, fontFamily: "'Inter', sans-serif", marginTop: 8,
+              fontSize: 42, fontWeight: 900, fontFamily: "'Inter', sans-serif", marginTop: 8,
               background: `linear-gradient(135deg, #ffffff, ${GD_ACCENT})`,
               WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
             }}>USER GROUP LEADER</div>
@@ -415,7 +415,7 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
             position: "absolute", bottom: 80, left: 0, right: 0, textAlign: "center",
             opacity: interpolate(frame, [430, 450], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
           }}>
-            <span style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", letterSpacing: 2 }}>
+            <span style={{ fontSize: 18, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", letterSpacing: 2 }}>
               {`VOLUNTEERS • ACROSS ALL ${COUNTRIES.length}+ PARTICIPATING COUNTRIES • PURE COMMUNITY SPIRIT`}
             </span>
           </div>
@@ -429,11 +429,11 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
             position: "absolute", top: 40, left: 0, right: 0, textAlign: "center",
             opacity: orgTitleSpring, transform: `translateY(${interpolate(orgTitleSpring, [0, 1], [20, 0])}px)`,
           }}>
-            <div style={{ fontSize: 18, fontWeight: 600, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", letterSpacing: 5 }}>
+            <div style={{ fontSize: 22, fontWeight: 600, color: "rgba(255,255,255,0.5)", fontFamily: "'Inter', sans-serif", letterSpacing: 5 }}>
               COMMUNITY GAMEDAY EUROPE ORGANIZERS
             </div>
             <div style={{
-              fontSize: 36, fontWeight: 900, fontFamily: "'Inter', sans-serif", marginTop: 8,
+              fontSize: 42, fontWeight: 900, fontFamily: "'Inter', sans-serif", marginTop: 8,
               color: GD_GOLD, letterSpacing: 1,
             }}>From the Community, for the Community</div>
           </div>
@@ -456,13 +456,13 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
                     <Img src={staticFile(org.face)} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                   </div>
                   <div style={{ textAlign: "center" }}>
-                    <div style={{ fontSize: 24, fontWeight: 800, color: "#ffffff", fontFamily: "'Inter', sans-serif" }}>
+                    <div style={{ fontSize: 28, fontWeight: 800, color: "#ffffff", fontFamily: "'Inter', sans-serif" }}>
                       {org.flag} {org.name}
                     </div>
-                    <div style={{ fontSize: 16, color: "rgba(255,255,255,0.55)", fontFamily: "'Inter', sans-serif", marginTop: 3, whiteSpace: "nowrap" }}>
+                    <div style={{ fontSize: 20, color: "rgba(255,255,255,0.55)", fontFamily: "'Inter', sans-serif", marginTop: 3, whiteSpace: "nowrap" }}>
                       {org.role}
                     </div>
-                    <div style={{ fontSize: 15, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", marginTop: 1 }}>
+                    <div style={{ fontSize: 19, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", marginTop: 1 }}>
                       {org.country}
                     </div>
                   </div>
