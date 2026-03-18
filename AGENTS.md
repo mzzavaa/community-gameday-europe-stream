@@ -39,13 +39,17 @@ src/compositions/  The actual video compositions
   02-gameplay/  Gameplay.tsx (2-hour muted overlay)
   03-closing/   ClosingPreRendered.tsx (Part A), ClosingWinnersTemplate.tsx (Part B)
   marketing/    MarketingVideo.tsx (social media clip)
-  inserts/      _TEMPLATE.tsx, StreamInterruption, GamemastersUpdate, QuestUpdate
+  inserts/      _TEMPLATE.tsx + 29 inserts organized in:
+                event-flow/, commentary/, quest/, ops/, people/
 
 public/assets/  Images, logos, videos (served by Remotion staticFile)
-  faces/        Organizer face photos
-  GameDay_Solid_Logo_for_swag/  GameDay logo variants
-  background_landscape_colour.png  Main background
+  faces/        Organizer face photos (firstname.jpg)
+  logos/        GameDay and AWS Community logo variants
+  programs/     AWS program badges (Heroes, Builders, Cloud Clubs, User Groups)
+  background-landscape.png  Main background
   europe-map.png  Map used in gameplay overlay
+  gameday-unicorn.png  Unicorn mascot
+  gameday-text.png  GameDay text logo
 ```
 
 ## How timing works

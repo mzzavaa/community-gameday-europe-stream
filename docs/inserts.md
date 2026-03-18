@@ -48,50 +48,50 @@ The broadcast equivalent of a commentator calling a goal, a comeback, or a close
 
 **Insert-FirstCompletion** (accent)
 The "goal scored" moment. Use the instant a team becomes first to complete a specific quest.
-Update: `QUEST_NAME`, `TEAM_NAME`, `TEAM_GROUP` at the top of `FirstCompletion.tsx`
+Update in Props panel: `questName`, `teamName`, `teamGroup`
 
 **Insert-CloseRace** (accent)
 Two teams separated by a small margin. "Everything can change in the next quest."
-Update: `TEAM_A`, `TEAM_B`, `POINT_DIFF` at the top of `CloseRace.tsx`
+Update in Props panel: `teamA`, `teamB`, `pointDiff`
 
 **Insert-ComebackAlert** (accent)
 The underdog story. A team has dramatically climbed the rankings. Show the rank jump visually.
-Update: `TEAM_NAME`, `USER_GROUP`, `FROM_RANK`, `TO_RANK` at the top of `ComebackAlert.tsx`
+Update in Props panel: `teamName`, `userGroup`, `fromRank`, `toRank`
 
 **Insert-TeamSpotlight** (violet)
 Human interest - use during gameplay lulls to feature a specific team. Gives the audience someone to root for.
-Update: `TEAM_NAME`, `USER_GROUP`, `COUNTRY`, `COUNTRY_FLAG`, `FACT` at the top of `TeamSpotlight.tsx`
+Update in Props panel: `teamName`, `userGroup`, `country`, `countryFlag`, `fact`
 Note: country flag emoji is allowed here - it is location-specific context.
 
 **Insert-CollectiveMilestone** (accent)
 The crowd-wave moment. "X out of Y teams have completed Quest Z." Shows shared progress with an animated fill bar.
-Update: `QUEST_NAME`, `COMPLETED_COUNT`, `TOTAL_COUNT` at the top of `CollectiveMilestone.tsx`
+Update in Props panel: `questName`, `completedCount`, `totalCount`
 
 **Insert-TopTeams** (violet)
 Mid-game standings snapshot - not the final result. Reveals the current order to drive competition.
-Update: `LABEL` and the `TOP_TEAMS` array in `TopTeams.tsx`
+Update in Props panel: `label` and the `topTeams` array
 
 ### Quest and Gameplay
 
 **Insert-QuestFixed** (green)
 Use when a broken quest is repaired and teams can proceed.
-Update: `QUEST_NAME` at the top of `QuestFixed.tsx`
+Update in Props panel: `questName`
 
 **Insert-QuestBroken** (red)
 Use when a quest stops working and teams should skip it.
-Update: `QUEST_NAME` at the top of `QuestBroken.tsx`
+Update in Props panel: `questName`
 
 **Insert-QuestUpdate** (green + orange)
 Use when a quest was fixed AND a new quest is available simultaneously.
-Two-card layout - edit content in `QuestUpdate.tsx`
+Two-card layout. Update in Props panel: `fixedQuestName`, `newQuestName`
 
 **Insert-NewQuestAvailable** (orange)
 A new quest just unlocked mid-game. Different from QuestFixed (that repairs something broken) - this is a fresh quest that wasn't available before.
-Update: `QUEST_NAME`, `DESCRIPTION` at the top of `NewQuestAvailable.tsx`
+Update in Props panel: `questName`, `description`
 
 **Insert-SurveyReminder** (gold)
 Use when a bonus survey quest becomes available.
-Update: `QUEST_NAME` in `SurveyReminder.tsx`
+Update in Props panel: `questName`
 
 ### Environment and Technical
 
@@ -101,20 +101,20 @@ Edit both cards directly in `StreamInterruption.tsx`
 
 **Insert-TechnicalIssue** (red)
 Use for known platform or environment issues being investigated.
-Update: `QUEST_NAME` and `MESSAGE` in `TechnicalIssue.tsx`
+Update in Props panel: `questName`, `message`
 
 **Insert-QuestHint** (orange)
 Use when many teams are stuck on a quest and the gamemasters want to give a nudge without revealing the full solution.
-Update: `QUEST_NAME`, `HINT_TEXT` at the top of `QuestHint.tsx`
+Update in Props panel: `questName`, `hintText`
 
 **Insert-GamemastersUpdate** (orange)
 Use when the Gamemasters have a live announcement.
 Names, roles, and face photos are pulled automatically from `AWS_SUPPORTERS` in `config/participants.ts` (entries with `country === "Gamemaster"`).
-Update: `MESSAGE` at the top of `GamemastersUpdate.tsx`
+Update in Props panel: `message`
 
 **Insert-ScoreCorrection** (violet)
 Use when scores were adjusted or corrected.
-Update: `REASON` in `ScoreCorrection.tsx`
+Update in Props panel: `reason`
 
 ### Time and Progress
 
@@ -124,11 +124,11 @@ No variables to update - show as-is
 
 **Insert-FinalCountdown** (orange)
 Use for the last 15 or 30 minutes warning.
-Update: `MINUTES_REMAINING` in `FinalCountdown.tsx`
+Update in Props panel: `minutesRemaining`
 
 **Insert-GameExtended** (gold)
 Use when extra time is added to the game.
-Update: `EXTRA_MINUTES` in `GameExtended.tsx`
+Update in Props panel: `extraMinutes`
 
 **Insert-Leaderboard** (violet)
 Use when leaderboard scores have been updated.
@@ -138,7 +138,7 @@ No variables to update - show as-is
 
 **Insert-LocationShoutout** (accent)
 Use to greet a specific city or user group during the stream.
-Update: `CITY`, `COUNTRY` in `LocationShoutout.tsx`
+Update in Props panel: `city`, `country`, `flag`
 
 ### Generic
 
@@ -153,18 +153,19 @@ No variables to update
 **Insert-StreamHostUpdate** (violet)
 Use when the stream host (community organizer) has something to say.
 Face photo, name, and role are pulled from `ORGANIZERS` in `config/participants.ts`.
-Update: `STREAM_HOST_NAME` and `MESSAGE` at the top of `StreamHostUpdate.tsx`
+Update in Props panel: `streamHostName`, `message`
 
 **Insert-ImportantReminder** (gold)
 Use for anything that does not fit the categories above.
-Update: `TITLE` and `MESSAGE` in `ImportantReminder.tsx`
+Update in Props panel: `title`, `message`
 
 ## Creating a New Insert
 
-1. Copy `_TEMPLATE.tsx`, rename it
+1. Copy `src/compositions/inserts/_TEMPLATE.tsx` into the appropriate subfolder (`event-flow/`, `commentary/`, `quest/`, `ops/`, or `people/`)
 2. Change `TITLE`, `MESSAGE`, `ACCENT` at the top
-3. Register in `src/Root.tsx` with `Insert-` prefix
-4. Done
+3. If the insert needs configurable data, add a Zod schema + `defaultProps` to the `<Composition>` in `src/Root.tsx` — this enables live Props panel editing in Remotion Studio
+4. Register in `src/Root.tsx` with `Insert-` prefix
+5. Done
 
 For more complex layouts (dual cards, status badges) use `QuestUpdate.tsx` as a reference.
 
@@ -180,4 +181,4 @@ For more complex layouts (dual cards, status badges) use `QuestUpdate.tsx` as a 
 
 ## Screenshots
 
-[Add screenshots here as the library grows - one per insert, showing a representative frame around frame 300]
+Screenshots of all 29 inserts are in [`screenshots/inserts/`](../screenshots/inserts/README.md) — organized by category with previews, composition IDs, and Props to update for each insert.

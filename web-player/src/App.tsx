@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useCallback, useRef } from "react";
 import { Player, PlayerRef } from "@remotion/player";
-import { GameDayPreShowInfoV4 } from "@compositions/compositions/04v4-GameDayStreamPreShowInfo-V4";
-import { GameDayMainEventV3 } from "@compositions/compositions/01v3-GameDayStreamMainEvent-V3";
-import { GameDayGameplay } from "@compositions/compositions/02-GameDayStreamGameplay-Muted";
-import { GameDayClosingCountdown } from "@compositions/compositions/03a-ClosingFixed";
+import { InfoLoop } from "@compositions/src/compositions/00-preshow/InfoLoop";
+import { MainEvent } from "@compositions/src/compositions/01-main-event/MainEvent";
+import { Gameplay } from "@compositions/src/compositions/02-gameplay/Gameplay";
+import { ClosingPreRendered } from "@compositions/src/compositions/03-closing/ClosingPreRendered";
 import { CountdownComposition } from "./Countdown";
 import {
   EVENT_DATE,
@@ -226,12 +226,12 @@ export const App: React.FC = () => {
         ref={playerRef}
         key={active}
         component={
-          active === "preshow" ? GameDayPreShowInfoV4 :
-          active === "mainevent" ? GameDayMainEventV3 :
-          active === "gameplay" ? GameDayGameplay :
-          GameDayClosingCountdown
+          active === "preshow" ? InfoLoop :
+          active === "mainevent" ? MainEvent :
+          active === "gameplay" ? Gameplay :
+          ClosingPreRendered
         }
-        inputProps={active === "preshow" ? { loopIteration: 0 } : {}}
+        inputProps={{}}
         durationInFrames={comp.durationInFrames}
         fps={comp.fps}
         compositionWidth={comp.width}

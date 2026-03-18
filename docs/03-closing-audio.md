@@ -1,4 +1,4 @@
-# 3. Closing Ceremony (Audio)  -  `03-GameDayStreamClosing-Audio.tsx`
+# 3. Closing Ceremony (Audio)  -  `03A-ClosingPreRendered` + `03B-ClosingWinnersTemplate`
 
 ## Overview
 
