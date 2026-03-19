@@ -64,7 +64,7 @@ export const CountdownComposition: React.FC<CountdownProps> = ({ eventDate, mile
           {hasEnded ? (
             <>
               <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: 4, textTransform: "uppercase", color: GD_ACCENT, marginBottom: 16 }}>
-                March 17, 2026 · Vienna, Austria
+                March 17, 2026 · Across Europe
               </div>
               <div style={{ fontSize: 64, fontWeight: 900, color: GD_GOLD, lineHeight: 1.1, marginBottom: 16 }}>
                 Event Complete
