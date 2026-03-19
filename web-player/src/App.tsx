@@ -289,7 +289,7 @@ const Controls: React.FC<{
 const screenStyle: React.CSSProperties = {
   width: "100vw", height: "100vh", display: "flex", flexDirection: "column",
   justifyContent: "center", alignItems: "center", background: "#0c0820", color: "white",
-  position: "relative",
+  position: "relative", fontFamily: "'Inter', 'Amazon Ember', sans-serif",
 };
 
 const controlsStyle: React.CSSProperties = {
