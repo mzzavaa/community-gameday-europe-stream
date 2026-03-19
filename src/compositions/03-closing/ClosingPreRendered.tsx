@@ -27,7 +27,6 @@ import {
 } from "../../design";
 import { formatTime } from "../../utils/timing";
 import { USER_GROUPS, ORGANIZERS, AWS_SUPPORTERS } from "../../../config/participants";
-import { LOGO_MAP } from "../../../config/logos";
 import { EVENT_DATE, EVENT_NAME } from "../../../config/event";
 
 // Format EVENT_DATE ("2026-03-17") → "17 MARCH 2026"
@@ -42,14 +41,7 @@ function findLogo(name: string): string | null {
   const ug = USER_GROUPS.find((g) => g.name === name);
   if (ug?.logo) return ug.logo;
 
-  // Fallback: LOGO_MAP override (for name mismatches or edge cases)
-  if (LOGO_MAP[name]) return LOGO_MAP[name];
-  for (const key of Object.keys(LOGO_MAP)) {
-    const normName = name.replace("AWS UG ", "AWS User Group ").replace(/\s*-\s*/g, "  -  ");
-    const normKey  = key.replace("AWS User Group ", "AWS UG ").replace(/\s*-\s*/g, "  -  ");
-    if (key.includes(normName) || normKey.includes(name)) return LOGO_MAP[key];
-  }
-  // Last resort: fuzzy match against USER_GROUPS logos
+  // Fallback: fuzzy match against USER_GROUPS logos
   const fuzzy = USER_GROUPS.find((g) => g.name.includes(name) || name.includes(g.name));
   if (fuzzy?.logo) return fuzzy.logo;
   return null;

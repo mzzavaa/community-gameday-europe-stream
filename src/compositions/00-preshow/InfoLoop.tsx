@@ -57,7 +57,6 @@ import {
   STREAM_START_TIME,
 } from "../../../config/event";
 import { USER_GROUPS, ORGANIZERS, AWS_SUPPORTERS } from "../../../config/participants";
-import { LOGO_MAP } from "../../../config/logos";
 
 const HOST     = ORGANIZERS.find((p) => p.name === STREAM_HOST_NAME)!;
 const GM_LABEL = AWS_SUPPORTERS.filter((p) => p.country === "Gamemaster").map((p) => p.name).join(" & ");
@@ -99,14 +98,7 @@ function findLogo(name: string): string | null {
   const ug = USER_GROUPS.find((g) => g.name === name);
   if (ug?.logo) return ug.logo;
 
-  // Fallback: LOGO_MAP override (for name mismatches or edge cases)
-  if (LOGO_MAP[name]) return LOGO_MAP[name];
-  for (const key of Object.keys(LOGO_MAP)) {
-    const normName = name.replace("AWS UG ", "AWS User Group ").replace(/\s*-\s*/g, "  -  ");
-    const normKey  = key.replace("AWS User Group ", "AWS UG ").replace(/\s*-\s*/g, "  -  ");
-    if (key.includes(normName) || normKey.includes(name)) return LOGO_MAP[key];
-  }
-  // Last resort: fuzzy match against USER_GROUPS logos
+  // Fallback: fuzzy match against USER_GROUPS logos
   const fuzzy = USER_GROUPS.find((g) => g.name.includes(name) || name.includes(g.name));
   if (fuzzy?.logo) return fuzzy.logo;
   return null;

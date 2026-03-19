@@ -42,7 +42,6 @@ import {
 } from "../../design";
 import { USER_GROUPS } from "../../../config/participants";
 import { EVENT_NAME } from "../../../config/event";
-import { LOGO_MAP } from "../../../config/logos";
 
 // ── Part B Constants ──
 const TOTAL_FRAMES = 9000;
@@ -446,7 +445,7 @@ const PodiumCard: React.FC<{
   const localFrame = frame - ROLL_CALL_START;
   const cardSpring = spring({ frame: Math.max(0, localFrame - entryDelay), fps, config: { damping: 10, stiffness: 80, mass: 0.8 } });
 
-  const logoUrl = LOGO_MAP[team.ugName];
+  const logoUrl = USER_GROUPS.find((g) => g.name === team.ugName)?.logo;
   const borderColor = rank === 1 ? GD_GOLD : rank <= 3 ? GD_ORANGE : GD_ACCENT + "60";
   const bgColor = rank === 1 ? `${GD_GOLD}18` : rank <= 3 ? `${GD_ORANGE}10` : `${GD_PURPLE}30`;
   const cardWidth = isTop3 ? 280 : 250;
