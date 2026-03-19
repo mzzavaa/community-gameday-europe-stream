@@ -80,7 +80,9 @@ function getCurrentSegment(): SegmentId {
     currentTime = `${get("hour")}:${get("minute")}`;
   }
 
-  if (currentDate !== EVENT_DATE && !urlTime) return "waiting";
+  if (currentDate !== EVENT_DATE && !urlTime) {
+    return currentDate > EVENT_DATE ? "end" : "waiting";
+  }
 
   for (let i = SCHEDULE.length - 1; i >= 0; i--) {
     if (currentTime >= SCHEDULE[i].start) {
@@ -209,10 +211,16 @@ export const App: React.FC = () => {
   if (active === "end") {
     return (
       <div style={screenStyle}>
-        <h1 style={{ fontSize: 32, color: "#fbbf24" }}>🎉 Stream Ended</h1>
-        <p style={{ fontSize: 18, marginTop: 16, color: "#c084fc" }}>
-          Thank you for joining AWS Community GameDay Europe!
-        </p>
+        <img src="/assets/aws-community-logo.png" style={{ height: 80, marginBottom: 32, opacity: 0.9 }} />
+        <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: 4, textTransform: "uppercase", color: "#8b5cf6", marginBottom: 16 }}>
+          AWS Community GameDay Europe · March 17, 2026
+        </div>
+        <div style={{ fontSize: 48, fontWeight: 800, color: "#fbbf24", marginBottom: 12, textAlign: "center", lineHeight: 1.1 }}>
+          That's a wrap.
+        </div>
+        <div style={{ fontSize: 18, color: "rgba(255,255,255,0.65)", maxWidth: 480, textAlign: "center", lineHeight: 1.6 }}>
+          Thank you to 53+ user groups across 20+ countries for competing. See you at the next edition.
+        </div>
         {showControls && <Controls active={active} override={override} onOverride={handleOverride} onAuto={handleAutoMode} />}
       </div>
     );

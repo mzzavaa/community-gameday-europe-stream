@@ -25,7 +25,7 @@ export const TIMEZONE = "Europe/Vienna"; // CET/CEST
 
 // ─── Composition metadata (must match Root.tsx) ──────────────────────
 export const COMPOSITIONS = {
-  preshow:   { fps: 30, width: 1280, height: 720, durationInFrames: 18000 }, // 10 min, loops 3×
+  preshow:   { fps: 30, width: 1280, height: 720, durationInFrames: 54000 }, // 30 min
   mainevent: { fps: 30, width: 1280, height: 720, durationInFrames: 54000 }, // 30 min
   gameplay:  { fps: 30, width: 1280, height: 720, durationInFrames: 216000 }, // 120 min
   closing:   { fps: 30, width: 1280, height: 720, durationInFrames: 21000 }, // ~11.7 min
