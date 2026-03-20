@@ -49,17 +49,16 @@ import { calculateCountdown, formatTime } from "../../utils/timing";
 import {
   STREAM_START_OFFSET_MINUTES as STREAM_START,
   GAME_START_OFFSET_MINUTES as GAME_START,
-  STREAM_HOST_NAME,
   EVENT_DATE,
   EVENT_NAME,
-  EVENT_EDITION,
   HOST_TIMEZONE,
   STREAM_START_TIME,
 } from "../../../config/event";
 import { USER_GROUPS, ORGANIZERS, AWS_SUPPORTERS } from "../../../config/participants";
 
-const HOST     = ORGANIZERS.find((p) => p.name === STREAM_HOST_NAME)!;
-const GM_LABEL = AWS_SUPPORTERS.filter((p) => p.country === "Gamemaster").map((p) => p.name).join(" & ");
+const ALL_PEOPLE = [...ORGANIZERS, ...AWS_SUPPORTERS];
+const HOST       = ALL_PEOPLE.find((p) => p.streamRole === "host")!;
+const GM_LABEL   = ALL_PEOPLE.filter((p) => p.streamRole === "gamemaster").map((p) => p.name).join(" & ");
 
 // ─── Derived event display strings ────────────────────────────────────────────
 const [_ey, _em, _ed] = EVENT_DATE.split("-").map(Number);

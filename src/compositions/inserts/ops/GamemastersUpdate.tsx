@@ -24,7 +24,9 @@ import {
 } from "../../../components";
 import { GD_DARK, GD_ORANGE } from "../../../design/colors";
 import { TYPOGRAPHY } from "../../../design/typography";
-import { AWS_SUPPORTERS } from "../../../../config/participants";
+import { AWS_SUPPORTERS, ORGANIZERS } from "../../../../config/participants";
+
+const ALL_PEOPLE = [...ORGANIZERS, ...AWS_SUPPORTERS];
 import { EVENT_NAME } from "../../../../config/event";
 
 export interface GamemastersUpdateProps {
@@ -35,7 +37,7 @@ const DEFAULT_PROPS: GamemastersUpdateProps = {
   message: "have an important announcement",
 };
 
-const GAMEMASTERS = AWS_SUPPORTERS.filter((p) => p.country === "Gamemaster");
+const GAMEMASTERS = ALL_PEOPLE.filter((p) => p.streamRole === "gamemaster");
 
 const TOTAL_FRAMES = 900;
 const FADE_OUT = 60;

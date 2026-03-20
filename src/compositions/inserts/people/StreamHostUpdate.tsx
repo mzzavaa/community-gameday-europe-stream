@@ -24,16 +24,16 @@ import {
 } from "../../../components";
 import { GD_DARK, GD_VIOLET } from "../../../design/colors";
 import { TYPOGRAPHY } from "../../../design/typography";
-import { ORGANIZERS } from "../../../../config/participants";
-import { STREAM_HOST_NAME, EVENT_NAME } from "../../../../config/event";
+import { ORGANIZERS, AWS_SUPPORTERS } from "../../../../config/participants";
+
+const ALL_PEOPLE = [...ORGANIZERS, ...AWS_SUPPORTERS];
+import { EVENT_NAME } from "../../../../config/event";
 
 export interface StreamHostUpdateProps {
-  streamHostName?: string;
   message?: string;
 }
 
 const DEFAULT_PROPS: StreamHostUpdateProps = {
-  streamHostName: STREAM_HOST_NAME,
   message: "has an update for you",
 };
 
@@ -42,13 +42,12 @@ const FADE_OUT = 60;
 const ACCENT_COLOR = GD_VIOLET;
 
 export const StreamHostUpdate: React.FC<StreamHostUpdateProps> = ({
-  streamHostName = DEFAULT_PROPS.streamHostName,
   message = DEFAULT_PROPS.message,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const HOST = ORGANIZERS.find((o) => o.name === streamHostName);
+  const HOST = ALL_PEOPLE.find((o) => o.streamRole === "host");
 
   const entrySpring = spring({ frame, fps, config: { damping: 14, stiffness: 100 } });
   const cardSpring = spring({ frame: Math.max(0, frame - 15), fps, config: { damping: 12, stiffness: 80 } });

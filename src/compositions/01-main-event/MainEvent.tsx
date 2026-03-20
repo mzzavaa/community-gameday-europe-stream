@@ -74,18 +74,16 @@ import {
   EVENT_NAME,
   EVENT_EDITION,
   SUPPORT_VIDEO_AVAILABLE,
-  STREAM_HOST_NAME,
-  SUPPORT_VIDEO_PRESENTER_NAME,
 } from "../../../config/event";
 import { AWS_SUPPORTERS as CONFIG_AWS, ORGANIZERS, USER_GROUPS } from "../../../config/participants";
 
 // ── Derived from config ──────────────────────────────────────────────────────
-// Gamemasters = AWS supporters whose country field is "Gamemaster"
-const GAMEMASTERS = CONFIG_AWS.filter((p) => p.country === "Gamemaster");
+const ALL_PEOPLE  = [...ORGANIZERS, ...CONFIG_AWS];
+const GAMEMASTERS = ALL_PEOPLE.filter((p) => p.streamRole === "gamemaster");
 const GM_LABEL    = GAMEMASTERS.map((p) => p.name).join(" & ");
 
-const HOST      = ORGANIZERS.find((p) => p.name === STREAM_HOST_NAME)!;
-const PRESENTER = ORGANIZERS.find((p) => p.name === SUPPORT_VIDEO_PRESENTER_NAME)!;
+const HOST      = ALL_PEOPLE.find((p) => p.streamRole === "host")!;
+const PRESENTER = ALL_PEOPLE.find((p) => p.streamRole === "support-presenter")!;
 
 // Format EVENT_DATE ("2026-03-17") → "March 17, 2026"
 const [_ey, _em, _ed] = EVENT_DATE.split("-").map(Number);
