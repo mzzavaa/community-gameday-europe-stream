@@ -79,7 +79,7 @@ import {
   EDITION,
   EDITION_LABEL,
 } from "../../../config/event";
-import { AWS_SUPPORTERS as CONFIG_AWS, ORGANIZERS, USER_GROUPS, type UserGroup, getOrganizerRole, getOrganizerUserGroup } from "../../../config/participants";
+import { AWS_SUPPORTERS as CONFIG_AWS, ORGANIZERS, USER_GROUPS, COUNTRIES, type UserGroup, getOrganizerRole, getOrganizerUserGroup } from "../../../config/participants";
 
 // ── Derived from config ──────────────────────────────────────────────────────
 const ALL_PEOPLE    = [...ORGANIZERS, ...CONFIG_AWS];
@@ -907,8 +907,8 @@ const LINDA_INFO: InfoCardDef[] = [
     inFrame: S.CARD_C_IN, outFrame: S.CARD_C_OUT,
     color: GD_GOLD, label: "THANK YOU",
     icon: <HeartIcon s={18} c={GD_GOLD} />,
-    text: "Thank you to every one of the 53+ UG Leaders across 20+ countries who made this happen as volunteers!",
-    highlight: "53+ UG Leaders",
+    text: `Thank you to every one of the ${USER_GROUPS.length}+ UG Leaders across ${COUNTRIES.length}+ countries who made this happen as volunteers!`,
+    highlight: `${USER_GROUPS.length}+ UG Leaders`,
   },
 ];
 

@@ -454,7 +454,7 @@ const SlideHero: React.FC = () => {
 // ═══════════════════════════════════════════════════════════════════════════════
 const SlideWhatsHappening: React.FC = () => {
   const cards = [
-    { icon: <BroadcastIcon size={28} color={GD_VIOLET} />, title: "One Stream, 53 Cities", body: "Right now, AWS User Groups all over Europe are watching this exact stream at their local venue. You are part of the first-ever pan-European AWS Community GameDay.", c: GD_VIOLET },
+    { icon: <BroadcastIcon size={28} color={GD_VIOLET} />, title: `One Stream, ${USER_GROUPS.length} Cities`, body: "Right now, AWS User Groups all over Europe are watching this exact stream at their local venue. You are part of the first-ever pan-European AWS Community GameDay.", c: GD_VIOLET },
     { icon: <VolumeMuteIcon size={28} color={GD_PINK} />, title: "Why Is It Muted Right Now?", body: `This is the pre-show loop before the live stream at ${STREAM_START_LABEL}. At ${AUDIO_CHECK} the stream host will do a ~30 second audio test - make sure you can hear it!`, c: GD_PINK },
     { icon: <GamepadIcon size={28} color={GD_GOLD} />, title: "The Competition", body: `At ${GAME_START_LABEL} all ${USER_GROUPS.length} groups start a 2-hour AWS challenge simultaneously. Your local UG leader gives your team access codes at ${CODES_TIME}.`, c: GD_GOLD },
     { icon: <TrophyIcon size={28} color={GD_ORANGE} />, title: "Stay for the Closing!", body: `At ${GAME_END_LABEL} the stream returns live. Winners are revealed globally, together. Don't leave - celebrate with ${USER_GROUPS.length} cities across Europe all at once.`, c: GD_ORANGE },
