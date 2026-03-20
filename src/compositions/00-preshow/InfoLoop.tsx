@@ -502,7 +502,7 @@ const SlideMeetHost: React.FC = () => {
         <div style={{ flex: 1 }}>
           <SectionLabel icon={<MicIcon size={20} color={GD_ACCENT} />} text="Your Stream Host" />
           <div style={{ opacity: textE, transform: `translateX(${interpolate(textE, [0, 1], [22, 0])}px)`, marginBottom: 14 }}>
-            <div style={{ fontSize: TYPOGRAPHY.h3, fontWeight: 900, color: "white", lineHeight: 1 }}>{HOST.name}</div>
+            <div style={{ fontSize: TYPOGRAPHY.h3, fontWeight: 900, color: "white", lineHeight: 1 }}>{HOST.fullName ?? HOST.name}</div>
             <div style={{ fontSize: TYPOGRAPHY.h6, color: GD_ACCENT, marginTop: 8, fontWeight: 600 }}>Stream Host{HOST.title ? ` · ${HOST.title}` : ""}</div>
           </div>
           <GlassCard style={{ padding: "14px 22px", borderLeft: `4px solid ${GD_VIOLET}` }}>
@@ -514,7 +514,7 @@ const SlideMeetHost: React.FC = () => {
             ))}
           </GlassCard>
           <div style={{ opacity: noteE, transform: `translateY(${interpolate(noteE, [0, 1], [10, 0])}px)`, marginTop: 10, background: `${GD_PURPLE}22`, border: `1px solid ${GD_PURPLE}44`, borderRadius: 12, padding: "10px 16px", fontSize: TYPOGRAPHY.caption, color: "rgba(255,255,255,0.5)", lineHeight: 1.5 }}>
-            <strong style={{ color: GD_ACCENT }}>Not sure who this is?</strong> Just like the organizers of all local GameDay events across Europe, {HOST.name} is a volunteer who organizes community events in their free time. Not an AWS employee.
+            <strong style={{ color: GD_ACCENT }}>Not sure who this is?</strong> Just like the organizers of all local GameDay events across Europe, {HOST.fullName ?? HOST.name} is a volunteer who organizes community events in their free time. Not an AWS employee.
           </div>
         </div>
       </div>
@@ -629,7 +629,7 @@ const SlideMeetGamemasters: React.FC = () => {
         <GlassCard style={{ padding: "14px 24px" }}>
           <div style={{ display: "flex", gap: 32, justifyContent: "center" }}>
             {[
-              { time: "~18:08 CET", label: `${HOST.name} introduces the gamemasters`, icon: <MicIcon size={14} color={GD_ACCENT} /> },
+              { time: "~18:08 CET", label: `${HOST.fullName ?? HOST.name} introduces the gamemasters`, icon: <MicIcon size={14} color={GD_ACCENT} /> },
               { time: "~18:10 CET", label: `${GM_LABEL} deliver GameDay instructions`, icon: <GamepadIcon size={14} color={GD_GOLD} /> },
               { time: "18:25 CET", label: "Team codes distributed at your venue", icon: <CheckCircleIcon size={14} color="#4ade80" /> },
             ].map((item) => (
@@ -855,7 +855,7 @@ const SlideSchedule: React.FC = () => {
   const phases = [
     { time: "17:30", label: "Pre-Show Loop", desc: "This muted loop plays until the live stream begins", c: GD_ACCENT, audio: false, countdown: null },
     { time: "17:55", label: "Audio Test", desc: "Test your audio setup - 5 minutes before the live stream starts", c: GD_VIOLET, audio: true, countdown: audioTestCountdown > 0 ? audioTestCountdown : null },
-    { time: "18:00", label: "Live Stream Begins", desc: `${HOST.name} · ${ORGANIZERS[1].name} & ${ORGANIZERS[0].name} · Special guest · ${GM_LABEL} - GameDay instructions`, c: GD_PINK, audio: true, countdown: sc },
+    { time: "18:00", label: "Live Stream Begins", desc: `${HOST.fullName ?? HOST.name} · ${ORGANIZERS[1].name} & ${ORGANIZERS[0].name} · Special guest · ${GM_LABEL} - GameDay instructions`, c: GD_PINK, audio: true, countdown: sc },
     { time: "18:30", label: "GameDay Starts!", desc: "2 hours of competitive AWS challenges - stream muted", c: GD_GOLD, audio: false, countdown: gc, hl: true },
     { time: "20:30", label: "Closing Ceremony", desc: "Winners revealed globally - audio returns!", c: GD_ORANGE, audio: true, countdown: null },
   ];
@@ -1038,7 +1038,7 @@ const SlideAudioCheckCountdown: React.FC = () => {
           <VolumeIcon size={80} color={GD_GOLD} />
         </div>
         <div style={{ fontSize: TYPOGRAPHY.h3, fontWeight: 900, color: GD_GOLD, letterSpacing: -1, marginTop: 12, textShadow: `0 0 40px ${GD_ORANGE}66` }}>AUDIO CHECK COMING UP</div>
-        <div style={{ fontSize: TYPOGRAPHY.body, color: "rgba(255,255,255,0.7)", fontWeight: 500, marginTop: 8 }}>{HOST.name} will speak live at 17:55 CET to test your audio</div>
+        <div style={{ fontSize: TYPOGRAPHY.body, color: "rgba(255,255,255,0.7)", fontWeight: 500, marginTop: 8 }}>{HOST.fullName ?? HOST.name} will speak live at 17:55 CET to test your audio</div>
       </div>
 
       {/* Countdown to audio check */}
@@ -1065,7 +1065,7 @@ const SlideAudioCheckCountdown: React.FC = () => {
       <div style={{ opacity: itemsE, transform: `translateY(${interpolate(itemsE, [0, 1], [12, 0])}px)`, display: "flex", flexDirection: "column", gap: 10, width: "100%", maxWidth: 680, marginTop: 8 }}>
         {[
           { icon: <CheckCircleIcon size={18} color="#4ade80" />, text: "Make sure your venue audio is connected to this stream", c: "#4ade80" },
-          { icon: <VolumeIcon size={18} color="#4ade80" />, text: `When the audio check starts, you should hear ${HOST.name} speaking`, c: "#4ade80" },
+          { icon: <VolumeIcon size={18} color="#4ade80" />, text: `When the audio check starts, you should hear ${HOST.fullName ?? HOST.name} speaking`, c: "#4ade80" },
           { icon: <BookOpenIcon size={18} color={GD_GOLD} />, text: "If audio fails, use the backup video that the GameDay organizers shared", c: GD_GOLD },
           { icon: <VolumeMuteIcon size={18} color={GD_ACCENT} />, text: "Stream is muted again during gameplay (18:30 - 20:30 CET)", c: GD_ACCENT },
         ].map((item, i) => {
@@ -1145,7 +1145,7 @@ const SlideLiveAudioCheck: React.FC = () => {
           <div style={{ fontSize: TYPOGRAPHY.label, color: GD_ORANGE, fontWeight: 700, letterSpacing: 3, textTransform: "uppercase" as const, marginBottom: 4, display: "flex", alignItems: "center", gap: 6 }}>
             <BroadcastIcon size={14} color={GD_ORANGE} /> Live Audio
           </div>
-          <div style={{ fontSize: TYPOGRAPHY.h4, fontWeight: 900, color: "white" }}>{HOST.name}</div>
+          <div style={{ fontSize: TYPOGRAPHY.h4, fontWeight: 900, color: "white" }}>{HOST.fullName ?? HOST.name}</div>
           <div style={{ fontSize: TYPOGRAPHY.bodySmall, color: GD_ACCENT, marginTop: 2 }}>Stream Host</div>
         </div>
       </div>
@@ -1183,7 +1183,7 @@ const SlideLiveAudioCheck: React.FC = () => {
       {/* Instructions */}
       <div style={{ opacity: itemsE, transform: `translateY(${interpolate(itemsE, [0, 1], [12, 0])}px)`, display: "flex", flexDirection: "column", gap: 8, width: "100%", maxWidth: 720, marginTop: 8 }}>
         {[
-          { icon: <VolumeIcon size={18} color="#4ade80" />, text: `Audio is ON - can you hear ${HOST.name}?`, c: "#4ade80" },
+          { icon: <VolumeIcon size={18} color="#4ade80" />, text: `Audio is ON - can you hear ${HOST.fullName ?? HOST.name}?`, c: "#4ade80" },
           { icon: <UsersIcon size={18} color={GD_GOLD} />, text: "Gather your team and get comfortable", c: GD_GOLD },
           { icon: <BroadcastIcon size={18} color={GD_ACCENT} />, text: "Keep the stream on - all important info will be displayed on screen", c: GD_ACCENT },
         ].map((item, i) => (
@@ -1221,7 +1221,7 @@ const SlideLastChecklist: React.FC = () => {
   const itemsE = useStagger(2, 6);
 
   const items = [
-    { icon: <CheckCircleIcon size={20} color="#4ade80" />, text: `Audio test complete - you heard ${HOST.name} at 17:55`, done: true },
+    { icon: <CheckCircleIcon size={20} color="#4ade80" />, text: `Audio test complete - you heard ${HOST.fullName ?? HOST.name} at 17:55`, done: true },
     { icon: <UsersIcon size={20} color="#4ade80" />, text: "Team formed and sitting together", done: true },
     { icon: <VolumeIcon size={20} color="#4ade80" />, text: "Stream audio is ON", done: true },
     { icon: <BroadcastIcon size={20} color={GD_GOLD} />, text: "Stream starts in seconds - stay tuned!", done: false },
@@ -1455,7 +1455,7 @@ type Section = { key: string; name: string; dur: number; el: React.ReactNode };
 const CONTENT_SLIDES: { key: string; name: string; el: React.ReactNode }[] = [
   { key: "hero", name: "Hero + Countdown", el: <SlideHero /> },
   { key: "whats-happening", name: "What's Happening?", el: <SlideWhatsHappening /> },
-  { key: "meet-linda", name: `Meet ${HOST.name}`, el: <SlideMeetHost /> },
+  { key: "meet-linda", name: `Meet ${HOST.fullName ?? HOST.name}`, el: <SlideMeetHost /> },
   { key: "meet-anda-jerome", name: `Meet ${ORGANIZERS[1].name} & ${ORGANIZERS[0].name}`, el: <SlideMeetCoOrganizers /> },
   { key: "meet-gamemasters", name: `Meet ${GM_LABEL}`, el: <SlideMeetGamemasters /> },
   { key: "aws-community", name: "What is the AWS Community?", el: <SlideAWSCommunity /> },
