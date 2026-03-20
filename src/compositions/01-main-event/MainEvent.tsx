@@ -585,7 +585,7 @@ const HostLocationScene: React.FC<{ frame: number; fps: number }> = ({ frame, fp
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// SCENE 4  - LINDA FULL INTRO CARD (1080 - 1320, large centered presentation)
+// SCENE 4  - HOST FULL INTRO CARD (1080 - 1320, large centered presentation)
 // ─────────────────────────────────────────────────────────────────────────────
 const HostIntroCard: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
   // Exit fly starts 45 frames before LINDA_OUT so the card arrives at the corner
@@ -653,7 +653,7 @@ const HostIntroCard: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
               transform: `translateX(${interpolate(photoSp, [0, 1], [-20, 0])}px)`,
             }}>
               <Img
-                src={staticFile("assets/faces/linda.jpg")}
+                src={staticFile(HOST.face)}
                 style={{
                   width: 140, height: 140, borderRadius: "50%", objectFit: "cover",
                   boxShadow: `0 0 0 4px ${GD_VIOLET}66, 0 0 40px ${GD_VIOLET}44`,
@@ -796,7 +796,7 @@ const HostCard: React.FC<{ frame: number }> = ({ frame }) => {
             );
           })}
           <Img
-            src={staticFile("assets/faces/linda.jpg")}
+            src={staticFile(HOST.face)}
             style={{
               position: "relative",
               width: 52, height: 52, borderRadius: "50%", objectFit: "cover",
@@ -1685,7 +1685,7 @@ const SupportPresenterIntroCard: React.FC<{ frame: number; fps: number }> = ({ f
               transform: `translateX(${interpolate(photoSp, [0, 1], [-20, 0])}px)`,
             }}>
               <Img
-                src={staticFile("assets/faces/mihaly.jpg")}
+                src={staticFile(PRESENTER!.face)}
                 style={{
                   width: 130, height: 130, borderRadius: "50%", objectFit: "cover",
                   boxShadow: `0 0 0 4px ${GD_VIOLET}55, 0 0 32px ${GD_VIOLET}33`,
@@ -1811,7 +1811,7 @@ const SupportPresenterMagicMoveOverlay: React.FC<{ frame: number }> = ({ frame }
 
       {/* ── Flying face photo ── */}
       <Img
-        src={staticFile("assets/faces/mihaly.jpg")}
+        src={staticFile(PRESENTER!.face)}
         style={{
           position: "absolute",
           left: lerp(SF_X, TF_X),
@@ -1944,7 +1944,7 @@ const SupportVideoBody: React.FC = () => {
               flexShrink: 0,
             }} />
             <Img
-              src={staticFile("assets/faces/mihaly.jpg")}
+              src={staticFile(PRESENTER!.face)}
               style={{
                 width: 44, height: 44, borderRadius: "50%", objectFit: "cover",
                 boxShadow: `0 0 14px ${GD_VIOLET}aa, 0 0 0 2px ${GD_ACCENT}55`,
