@@ -76,11 +76,10 @@ import {
   SUPPORT_VIDEO_AVAILABLE,
   CODES_TIME,
   GAME_START as GAME_START_LABEL,
-  EDITION,
   EDITION_LABEL,
-  TIMEZONE_COUNT,
 } from "../../../config/event";
-import { AWS_SUPPORTERS as CONFIG_AWS, ORGANIZERS, USER_GROUPS, COUNTRIES, type UserGroup, getOrganizerRole, getOrganizerUserGroup } from "../../../config/participants";
+import { AWS_SUPPORTERS as CONFIG_AWS, ORGANIZERS, USER_GROUPS, COUNTRIES, DISPLAY_STATS, type UserGroup, getOrganizerRole, getOrganizerUserGroup } from "../../../config/participants";
+import { resolveStats } from "../../utils/stats";
 
 // ── Derived from config ──────────────────────────────────────────────────────
 const ALL_PEOPLE    = [...ORGANIZERS, ...CONFIG_AWS];
@@ -2591,28 +2590,29 @@ export const MainEvent: React.FC = () => {
   // Suppress sidebar/speakers during video, Linda's thank-you, and the dark hold up to collab start
   const isVideoScene   = frame >= S.VIDEO_IN && frame < S.COLLAB_IN + COLLAB_PA; // hide sidebar during Phase A too
 
-  const STATS: StatDef[] = [
-    {
-      value: String(USER_GROUPS.length), label: "User Groups", sub: "Playing simultaneously across Europe",
-      color: GD_ACCENT, icon: <UsersIcon s={32} c={GD_ACCENT} />,
-      inFrame: S.STAT1_IN, outFrame: S.STAT1_OUT,
-    },
-    {
-      value: String(COUNTRIES.length), label: "Countries", sub: "United for the first time",
-      color: GD_VIOLET, icon: <GlobeIcon s={32} c={GD_VIOLET} />,
-      inFrame: S.STAT2_IN, outFrame: S.STAT2_OUT,
-    },
-    {
-      value: String(TIMEZONE_COUNT), label: "Timezones", sub: "UTC+0 through UTC+3",
-      color: GD_PINK, icon: <ClockIcon s={32} c={GD_PINK} />,
-      inFrame: S.STAT3_IN, outFrame: S.STAT3_OUT,
-    },
-    {
-      value: EDITION, label: "Edition Ever", sub: "History is being made today",
-      color: GD_GOLD, icon: <StarIcon s={32} c={GD_GOLD} />,
-      inFrame: S.STAT4_IN, outFrame: S.STAT4_OUT,
-    },
+  // Map DISPLAY_STATS entries to the 4 fixed timing slots.
+  // Slots without a matching stat entry are simply skipped (BigStat returns null out of range).
+  const STAT_SLOTS = [
+    { inFrame: S.STAT1_IN, outFrame: S.STAT1_OUT },
+    { inFrame: S.STAT2_IN, outFrame: S.STAT2_OUT },
+    { inFrame: S.STAT3_IN, outFrame: S.STAT3_OUT },
+    { inFrame: S.STAT4_IN, outFrame: S.STAT4_OUT },
   ];
+  const STAT_ICON_MAP: Record<string, { icon: React.ReactNode; color: string }> = {
+    "user-groups":    { icon: <UsersIcon s={32} c={GD_ACCENT}  />, color: GD_ACCENT  },
+    "countries":      { icon: <GlobeIcon s={32} c={GD_VIOLET}  />, color: GD_VIOLET  },
+    "timezones":      { icon: <ClockIcon s={32} c={GD_PINK}    />, color: GD_PINK    },
+    "edition":        { icon: <StarIcon  s={32} c={GD_GOLD}    />, color: GD_GOLD    },
+    "gameplay-hours": { icon: <ClockIcon s={32} c={GD_ORANGE}  />, color: GD_ORANGE  },
+  };
+  const STATS: StatDef[] = resolveStats(DISPLAY_STATS).slice(0, 4).map((s, i) => {
+    const iconMeta = STAT_ICON_MAP[DISPLAY_STATS[i]] ?? { icon: <StarIcon s={32} c={GD_GOLD} />, color: GD_GOLD };
+    return {
+      value: s.v, label: s.l, sub: s.sub,
+      color: iconMeta.color, icon: iconMeta.icon,
+      inFrame: STAT_SLOTS[i].inFrame, outFrame: STAT_SLOTS[i].outFrame,
+    };
+  });
 
   return (
     <AbsoluteFill style={{ fontFamily: FF, background: GD_DARK }}>

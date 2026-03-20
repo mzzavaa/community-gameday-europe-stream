@@ -61,9 +61,13 @@ import {
   GM_INSTRUCTIONS_TIME,
   CODES_TIME,
   EDITION_LABEL,
-  TIMEZONE_COUNT,
+
 } from "../../../config/event";
-import { USER_GROUPS, COUNTRIES, ORGANIZERS, AWS_SUPPORTERS, type UserGroup, getOrganizerRole, getOrganizerUserGroup } from "../../../config/participants";
+import { USER_GROUPS, ORGANIZERS, AWS_SUPPORTERS, DISPLAY_STATS, type UserGroup, getOrganizerRole, getOrganizerUserGroup } from "../../../config/participants";
+import { resolveStats } from "../../utils/stats";
+
+// Colours assigned left-to-right to whatever stats are in DISPLAY_STATS
+const STAT_COLORS_PRESHOW = [GD_GOLD, GD_PINK, GD_VIOLET, GD_ORANGE, GD_ACCENT];
 
 const ALL_PEOPLE    = [...ORGANIZERS, ...AWS_SUPPORTERS];
 const HOST          = ALL_PEOPLE.find((p) => p.streamRole === "host")!;
@@ -403,12 +407,7 @@ const SlideHero: React.FC = () => {
   const timerE = useStagger(8, 8);
   const statsE = useStagger(12, 8);
 
-  const stats = [
-    { v: String(USER_GROUPS.length), l: "User Groups", c: GD_GOLD },
-    { v: String(COUNTRIES.length), l: "Countries", c: GD_PINK },
-    { v: String(TIMEZONE_COUNT), l: "Timezones", c: GD_VIOLET },
-    { v: "1st", l: "Edition", c: GD_ORANGE },
-  ];
+  const stats = resolveStats(DISPLAY_STATS).map((s, i) => ({ v: s.v, l: s.l, c: STAT_COLORS_PRESHOW[i % STAT_COLORS_PRESHOW.length] }));
 
   return (
     <AbsoluteFill style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
@@ -1375,12 +1374,7 @@ const SlideFinalCountdown: React.FC = () => {
 // SLIDE 16 - Stats V3
 // ═══════════════════════════════════════════════════════════════════════════════
 const SlideStats: React.FC = () => {
-  const stats = [
-    { v: String(USER_GROUPS.length), l: "User Groups", sub: "Cities across Europe", c: GD_GOLD },
-    { v: String(COUNTRIES.length), l: "Countries", sub: "From Iceland to Turkey", c: GD_PINK },
-    { v: String(TIMEZONE_COUNT), l: "Timezones", sub: "UTC+0 through UTC+3", c: GD_VIOLET },
-    { v: "1st", l: "Edition", sub: "History being made today", c: GD_ORANGE },
-  ];
+  const stats = resolveStats(DISPLAY_STATS).map((s, i) => ({ v: s.v, l: s.l, sub: s.sub, c: STAT_COLORS_PRESHOW[i % STAT_COLORS_PRESHOW.length] }));
   const mapE = useStagger(5, 8);
   return (
     <AbsoluteFill style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>

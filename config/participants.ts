@@ -211,3 +211,27 @@ export const AWS_SUPPORTERS: Organizer[] = [
   { name: "Uliana", jobTitle: "Community Manager, AWS",             flag: "🌍", face: "assets/faces/uliana.jpg", type: "aws" },
   { name: "Natalia", jobTitle: "DevEx Community Manager, AWS",      flag: "🌍", face: "assets/faces/natalia.jpg", type: "aws" },
 ];
+
+// ── Display Stats Config ────────────────────────────────────────────────────
+// Pick which 1–5 stats appear in the "By the Numbers" sections.
+// Values are resolved automatically from participants + event config.
+//
+// Available options:
+//   "user-groups"    → USER_GROUPS.length   (UG count)
+//   "countries"      → COUNTRIES.length     (unique flags)
+//   "timezones"      → TIMEZONE_COUNT       (from event.ts)
+//   "edition"        → EDITION              (from event.ts, e.g. "1st")
+//   "gameplay-hours" → GAMEPLAY_HOURS       (from event.ts)
+export type StatType =
+  | "user-groups"
+  | "countries"
+  | "timezones"
+  | "edition"
+  | "gameplay-hours";
+
+export const DISPLAY_STATS: StatType[] = [
+  "user-groups",
+  "countries",
+  "timezones",
+  "edition",
+];

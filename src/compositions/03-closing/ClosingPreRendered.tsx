@@ -26,8 +26,9 @@ import {
   TYPOGRAPHY,
 } from "../../design";
 import { formatTime } from "../../utils/timing";
-import { USER_GROUPS, ORGANIZERS, AWS_SUPPORTERS, type UserGroup, getOrganizerRole } from "../../../config/participants";
-import { EVENT_DATE, EVENT_NAME, TIMEZONE_COUNT, GAMEPLAY_HOURS } from "../../../config/event";
+import { USER_GROUPS, ORGANIZERS, AWS_SUPPORTERS, DISPLAY_STATS, type UserGroup, getOrganizerRole } from "../../../config/participants";
+import { EVENT_DATE, EVENT_NAME } from "../../../config/event";
+import { resolveStats } from "../../utils/stats";
 
 // Format EVENT_DATE ("2026-03-17") → "17 MARCH 2026"
 const [_ey, _em, _ed] = EVENT_DATE.split("-").map(Number);
@@ -185,11 +186,9 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
   // ── SCENE 2: Stats cascade (frames 160-379)  -  overlaps with scene 1 for crossfade ──
   const s2Opacity = interpolate(frame, [160, 195, 350, 379], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const STATS = [
-    { value: USER_GROUPS.length, label: "USER GROUPS", suffix: "+", delay: 190 },
-    { value: COUNTRIES.length, label: "COUNTRIES", suffix: "+", delay: 210 },
-    { value: GAMEPLAY_HOURS, label: "HOURS OF GAMEPLAY", suffix: "", delay: 230 },
-    { value: 1, label: "EPIC DAY", suffix: "", delay: 250 },
-    { value: TIMEZONE_COUNT, label: "TIMEZONES", suffix: "+", delay: 270 },
+    ...resolveStats(DISPLAY_STATS).map((s, i) => ({
+      value: s.n, label: s.l.toUpperCase(), suffix: s.suffix, delay: 190 + i * 20,
+    })),
   ];
 
   // ── SCENE 3: Flag parade (frames 360-549)  -  overlaps with scene 2 ──
