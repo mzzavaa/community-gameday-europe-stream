@@ -61,6 +61,7 @@ import {
   GM_INSTRUCTIONS_TIME,
   CODES_TIME,
   EDITION_LABEL,
+  TIMEZONE_COUNT,
 } from "../../../config/event";
 import { USER_GROUPS, COUNTRIES, ORGANIZERS, AWS_SUPPORTERS, type UserGroup, getOrganizerRole, getOrganizerUserGroup } from "../../../config/participants";
 
@@ -405,7 +406,7 @@ const SlideHero: React.FC = () => {
   const stats = [
     { v: String(USER_GROUPS.length), l: "User Groups", c: GD_GOLD },
     { v: String(COUNTRIES.length), l: "Countries", c: GD_PINK },
-    { v: "4", l: "Timezones", c: GD_VIOLET },
+    { v: String(TIMEZONE_COUNT), l: "Timezones", c: GD_VIOLET },
     { v: "1st", l: "Edition", c: GD_ORANGE },
   ];
 
@@ -1377,7 +1378,7 @@ const SlideStats: React.FC = () => {
   const stats = [
     { v: String(USER_GROUPS.length), l: "User Groups", sub: "Cities across Europe", c: GD_GOLD },
     { v: String(COUNTRIES.length), l: "Countries", sub: "From Iceland to Turkey", c: GD_PINK },
-    { v: "4", l: "Timezones", sub: "UTC+0 through UTC+3", c: GD_VIOLET },
+    { v: String(TIMEZONE_COUNT), l: "Timezones", sub: "UTC+0 through UTC+3", c: GD_VIOLET },
     { v: "1st", l: "Edition", sub: "History being made today", c: GD_ORANGE },
   ];
   const mapE = useStagger(5, 8);

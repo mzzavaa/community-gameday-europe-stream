@@ -78,6 +78,7 @@ import {
   GAME_START as GAME_START_LABEL,
   EDITION,
   EDITION_LABEL,
+  TIMEZONE_COUNT,
 } from "../../../config/event";
 import { AWS_SUPPORTERS as CONFIG_AWS, ORGANIZERS, USER_GROUPS, COUNTRIES, type UserGroup, getOrganizerRole, getOrganizerUserGroup } from "../../../config/participants";
 
@@ -2602,7 +2603,7 @@ export const MainEvent: React.FC = () => {
       inFrame: S.STAT2_IN, outFrame: S.STAT2_OUT,
     },
     {
-      value: "4", label: "Timezones", sub: "UTC+0 through UTC+3",
+      value: String(TIMEZONE_COUNT), label: "Timezones", sub: "UTC+0 through UTC+3",
       color: GD_PINK, icon: <ClockIcon s={32} c={GD_PINK} />,
       inFrame: S.STAT3_IN, outFrame: S.STAT3_OUT,
     },
