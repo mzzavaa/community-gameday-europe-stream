@@ -2084,14 +2084,13 @@ const HostGuestIntro: React.FC<{ frame: number; fps: number }> = ({ frame, fps }
 //   Phase 3 (rel 900+):    Both cards fade, special guest card + sidebar visible
 // No schedule sidebar in phases 1+2 (backdrop covers it - filler content).
 // ─────────────────────────────────────────────────────────────────────────────
-// Derive face keys from ORGANIZERS face paths ("assets/faces/jerome.jpg" → "jerome")
-const COMMUNITY_FACES = ORGANIZERS.map((p) =>
-  p.face.replace("assets/faces/", "").replace(/\.\w+$/, "")
-);
+// Community organizer face paths — used directly from the face field in config
+const COMMUNITY_FACES = ORGANIZERS.map((p) => p.face);
 
 // AWS supporter data (shown in the AWS GlassCard) — derived from config/participants
 const AWS_SUPPORTERS = CONFIG_AWS.map((p) => ({
-  key: p.face.replace("assets/faces/", "").replace(/\.\w+$/, ""),
+  key: p.name, // stable React key
+  face: p.face,
   name: p.name,
   title: getOrganizerRole(p),
   sub: p.location ?? "",
@@ -2224,12 +2223,12 @@ const CollabIntroScene: React.FC<{ frame: number; fps: number }> = ({ frame, fps
 
             {/* Faces  -  staggered, all 64px, centred wrap */}
             <div style={{ display: "flex", flexWrap: "wrap" as const, gap: 12, justifyContent: "center", flex: 1 }}>
-              {COMMUNITY_FACES.map((name, i) => {
+              {COMMUNITY_FACES.map((face, i) => {
                 const fSp = spring({ frame: Math.max(0, rel - COLLAB_PA - 30 - i * 65), fps, config: springConfig.entry });
                 return (
-                  <div key={name} style={{ opacity: fSp, transform: `scale(${interpolate(fSp, [0, 1], [0.45, 1])})` }}>
+                  <div key={face} style={{ opacity: fSp, transform: `scale(${interpolate(fSp, [0, 1], [0.45, 1])})` }}>
                     <Img
-                      src={staticFile(`assets/faces/${name}.jpg`)}
+                      src={staticFile(face)}
                       style={{ width: 64, height: 64, borderRadius: "50%", objectFit: "cover",
                         boxShadow: `0 0 0 2px ${GD_VIOLET}99, 0 0 12px ${GD_VIOLET}44` }}
                     />
@@ -2273,7 +2272,7 @@ const CollabIntroScene: React.FC<{ frame: number; fps: number }> = ({ frame, fps
                 return (
                   <div key={person.key} style={{ opacity: pSp, transform: `scale(${interpolate(pSp, [0, 1], [0.5, 1])})` }}>
                     <Img
-                      src={staticFile(`assets/faces/${person.key}.jpg`)}
+                      src={staticFile(person.face)}
                       style={{ width: 64, height: 64, borderRadius: "50%", objectFit: "cover",
                         boxShadow: `0 0 0 2px ${GD_ORANGE}aa, 0 0 14px ${GD_ORANGE}55` }}
                     />
