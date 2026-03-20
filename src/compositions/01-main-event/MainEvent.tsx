@@ -559,7 +559,7 @@ const HostLocationScene: React.FC<{ frame: number; fps: number }> = ({ frame, fp
               fontSize: TYPOGRAPHY.h6, fontWeight: 700, color: GD_PINK,
               fontFamily: FF, letterSpacing: 2,
             }}>
-              {HOST.location}
+              {HOST.location?.split(", ")[0]}
             </div>
           </div>
 
@@ -712,7 +712,7 @@ const HostIntroCard: React.FC<{ frame: number; fps: number }> = ({ frame, fps })
                     fontSize: TYPOGRAPHY.caption, color: "rgba(255,255,255,0.45)",
                     fontFamily: FF, display: "flex", alignItems: "center", gap: 5,
                   }}>
-                    <PinIcon s={11} c={GD_ACCENT} /> {HOST.location}
+                    <PinIcon s={11} c={GD_ACCENT} /> {HOST.location?.split(", ")[0]}
                   </div>
                 </div>
               </div>
@@ -1073,7 +1073,7 @@ const CoOrganizersCard: React.FC<{ frame: number; fps: number }> = ({ frame, fps
                       fontSize: TYPOGRAPHY.bodySmall, color: "rgba(255,255,255,0.45)",
                       fontFamily: FF, display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
                     }}>
-                      <PinIcon s={10} c={p.color} />{p.location}
+                      <PinIcon s={10} c={p.color} />{p.location.split(", ")[0]}
                     </div>
                   </div>
                 </div>
@@ -1718,7 +1718,7 @@ const SupportPresenterIntroCard: React.FC<{ frame: number; fps: number }> = ({ f
                   fontSize: TYPOGRAPHY.caption, color: "rgba(255,255,255,0.45)",
                   fontFamily: FF, display: "flex", alignItems: "center", gap: 5,
                 }}>
-                  <PinIcon s={11} c={GD_ACCENT} /> {PRESENTER.location}
+                  <PinIcon s={11} c={GD_ACCENT} /> {PRESENTER.location?.split(", ")[0]}
                 </div>
               </div>
 

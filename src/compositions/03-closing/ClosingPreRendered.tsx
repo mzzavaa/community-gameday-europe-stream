@@ -124,6 +124,16 @@ function peopleLayout(n: number): { imgSize: number; itemW: number; colGap: numb
   return { imgSize, itemW, colGap, rowGap, containerW: cols * itemW + (cols - 1) * colGap };
 }
 
+// ── Single-row layout for AWS supporters (always one row, scales down for 5+) ──
+function supportersLayout(n: number): { imgSize: number; itemW: number; gap: number; nameSize: number; roleSize: number } {
+  const imgSize  = n <= 3 ? 130 : n <= 4 ? 115 : 95;
+  const gap      = n <= 3 ? 70  : n <= 4 ? 55  : 40;
+  const itemW    = imgSize + 56;
+  const nameSize = n <= 4 ? 22 : 18;
+  const roleSize = n <= 4 ? 15 : 13;
+  return { imgSize, itemW, gap, nameSize, roleSize };
+}
+
 // ── Transition Flash Constants ──
 const FLASH_DURATION = 60;
 const PHASE_BOUNDARY_FRAMES_A = [0];
@@ -390,7 +400,7 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
                           </div>
                           <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 4, marginTop: 2 }}>
                             <span style={{ fontSize: 16 }}>{org.flag}</span>
-                            <span style={{ fontSize: TYPOGRAPHY.caption, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif" }}>{org.location}</span>
+                            <span style={{ fontSize: TYPOGRAPHY.caption, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif" }}>{org.location?.split(", ")[0]}</span>
                           </div>
                         </div>
                       </div>
@@ -424,44 +434,43 @@ const HeroIntro: React.FC<{ frame: number }> = ({ frame }) => {
               Orga Support & Gamemasters making this event possible
             </span>
           </div>
-          {/* AWS supporter cards — responsive flex grid, 1-9 people */}
+          {/* AWS supporter cards — single row, scales for up to 5 people */}
           {(() => {
-            const gl = peopleLayout(AWS_SUPPORTERS.length);
+            const sl = supportersLayout(AWS_SUPPORTERS.length);
             return (
               <div style={{
                 position: "absolute", top: 130, bottom: 180, left: 0, right: 0,
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}>
                 <div style={{
-                  display: "flex", flexWrap: "wrap", justifyContent: "center",
-                  gap: `${gl.rowGap}px ${gl.colGap}px`,
-                  width: gl.containerW,
+                  display: "flex", flexWrap: "nowrap", justifyContent: "center", alignItems: "flex-start",
+                  gap: sl.gap,
                 }}>
                   {AWS_SUPPORTERS.map((person, i) => {
                     const cardSpring = spring({ frame: Math.max(0, frame - 1070 - i * 18), fps, config: { damping: 18, stiffness: 80, mass: 1 } });
                     const cardScale = interpolate(cardSpring, [0, 1], [0.5, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
                     return (
                       <div key={person.name} style={{
-                        width: gl.itemW, display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
+                        width: sl.itemW, display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
                         opacity: cardSpring, transform: `scale(${cardScale}) translateY(${interpolate(cardSpring, [0, 1], [20, 0])}px)`,
                       }}>
                         <div style={{
-                          width: gl.imgSize, height: gl.imgSize, borderRadius: "50%", overflow: "hidden",
+                          width: sl.imgSize, height: sl.imgSize, borderRadius: "50%", overflow: "hidden",
                           boxShadow: `0 0 30px ${GD_ORANGE}70, 0 0 60px ${GD_ORANGE}40, 0 4px 16px rgba(0,0,0,0.4)`,
                           border: `2px solid ${GD_ORANGE}40`,
                         }}>
                           <Img src={staticFile(person.face)} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                         </div>
                         <div style={{ textAlign: "center" }}>
-                          <div style={{ fontSize: TYPOGRAPHY.h6, fontWeight: 800, color: "#ffffff", fontFamily: "'Inter', sans-serif" }}>
+                          <div style={{ fontSize: sl.nameSize, fontWeight: 800, color: "#ffffff", fontFamily: "'Inter', sans-serif" }}>
                             {person.name}
                           </div>
-                          <div style={{ fontSize: TYPOGRAPHY.bodySmall, color: "rgba(255,255,255,0.55)", fontFamily: "'Inter', sans-serif", marginTop: 3 }}>
+                          <div style={{ fontSize: sl.roleSize, color: "rgba(255,255,255,0.55)", fontFamily: "'Inter', sans-serif", marginTop: 3 }}>
                             {getOrganizerRole(person)}
                           </div>
                           {person.location && (
-                            <div style={{ fontSize: TYPOGRAPHY.caption, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", marginTop: 2 }}>
-                              {person.location}
+                            <div style={{ fontSize: sl.roleSize - 2, color: "rgba(255,255,255,0.4)", fontFamily: "'Inter', sans-serif", marginTop: 2 }}>
+                              {person.location.split(", ")[0]}
                             </div>
                           )}
                         </div>
