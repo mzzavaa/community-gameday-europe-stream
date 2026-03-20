@@ -1434,7 +1434,7 @@ const SlideUGSpotlight: React.FC<{ index: number }> = ({ index }) => {
       <div style={{ opacity: nameE, transform: `translateY(${interpolate(nameE, [0, 1], [22, 0])}px)`, textAlign: "center", marginBottom: 10 }}>
         <div style={{ fontSize: TYPOGRAPHY.h2, fontWeight: 900, color: "white", lineHeight: 1.05, maxWidth: 900, background: `linear-gradient(135deg, #fff, ${GD_ACCENT})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>{g.name}</div>
         <div style={{ fontSize: TYPOGRAPHY.h5, color: GD_ACCENT, marginTop: 8, fontWeight: 500, display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
-          <LocationIcon size={14} color={GD_ACCENT} /> {g.city}
+          <LocationIcon size={14} color={GD_ACCENT} /> {g.location}
         </div>
       </div>
 
@@ -1442,8 +1442,8 @@ const SlideUGSpotlight: React.FC<{ index: number }> = ({ index }) => {
       <div style={{ opacity: detailsE, transform: `translateY(${interpolate(detailsE, [0, 1], [14, 0])}px)`, display: "flex", gap: 18, marginTop: 14 }}>
         {[
           { label: "Group", value: `${displayNum} of ${USER_GROUPS.length}`, c: GD_VIOLET },
-          { label: "Country", value: `${g.flag} ${g.city.split(", ")[1]?.trim()}`, c: GD_GOLD },
-          { label: "City", value: g.city.split(",")[0]?.trim(), c: "#4ade80" },
+          { label: "Country", value: `${g.flag} ${g.location.split(", ")[1]?.trim()}`, c: GD_GOLD },
+          { label: "City", value: g.location.split(",")[0]?.trim(), c: "#4ade80" },
         ].map((stat) => (
           <div key={stat.label} style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${stat.c}33`, borderRadius: 14, padding: "12px 24px", textAlign: "center" }}>
             <div style={{ fontSize: TYPOGRAPHY.label, color: GD_ACCENT, textTransform: "uppercase", letterSpacing: 2, marginBottom: 4 }}>{stat.label}</div>

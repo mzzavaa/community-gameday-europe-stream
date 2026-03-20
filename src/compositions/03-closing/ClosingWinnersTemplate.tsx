@@ -72,7 +72,7 @@ export interface TeamData {
   teamName: string;       // The team name (most prominent)
   ugName: string;         // User group name (for LOGO_MAP lookup)
   flag: string;           // Country flag emoji
-  city: string;           // City, Country
+  location: string;       // "City, Country"
   score: number;
 }
 
@@ -81,12 +81,12 @@ export interface TeamData {
 // ⚠️  PLACEHOLDER DATA  -  MUST BE UPDATED WITH REAL WINNERS BEFORE RENDERING
 // See TEMPLATE.md for instructions on how to update
 export const PODIUM_TEAMS: TeamData[] = [
-  { teamName: "TEAM NAME", ugName: "REPLACE_WITH_UG_NAME", flag: "🏳️", city: "CITY, COUNTRY", score: 18500 },
-  { teamName: "TEAM NAME", ugName: "REPLACE_WITH_UG_NAME", flag: "🏳️", city: "CITY, COUNTRY", score: 15200 },
-  { teamName: "TEAM NAME", ugName: "REPLACE_WITH_UG_NAME", flag: "🏳️", city: "CITY, COUNTRY", score: 12800 },
-  { teamName: "TEAM NAME", ugName: "REPLACE_WITH_UG_NAME", flag: "🏳️", city: "CITY, COUNTRY", score: 11500 },
-  { teamName: "TEAM NAME", ugName: "REPLACE_WITH_UG_NAME", flag: "🏳️", city: "CITY, COUNTRY", score: 10200 },
-  { teamName: "TEAM NAME", ugName: "REPLACE_WITH_UG_NAME", flag: "🏳️", city: "CITY, COUNTRY", score: 8900 },
+  { teamName: "TEAM NAME", ugName: "REPLACE_WITH_UG_NAME", flag: "🏳️", location: "CITY, COUNTRY", score: 18500 },
+  { teamName: "TEAM NAME", ugName: "REPLACE_WITH_UG_NAME", flag: "🏳️", location: "CITY, COUNTRY", score: 15200 },
+  { teamName: "TEAM NAME", ugName: "REPLACE_WITH_UG_NAME", flag: "🏳️", location: "CITY, COUNTRY", score: 12800 },
+  { teamName: "TEAM NAME", ugName: "REPLACE_WITH_UG_NAME", flag: "🏳️", location: "CITY, COUNTRY", score: 11500 },
+  { teamName: "TEAM NAME", ugName: "REPLACE_WITH_UG_NAME", flag: "🏳️", location: "CITY, COUNTRY", score: 10200 },
+  { teamName: "TEAM NAME", ugName: "REPLACE_WITH_UG_NAME", flag: "🏳️", location: "CITY, COUNTRY", score: 8900 },
 ];
 
 // ── Reveal Schedule ──
@@ -333,7 +333,7 @@ const PodiumBar: React.FC<{
           fontSize: isTop3 ? TYPOGRAPHY.captionSmall : TYPOGRAPHY.label, color: "rgba(255,255,255,0.7)",
           fontFamily: "'Inter', sans-serif", opacity: cityOpacity, textAlign: "center",
           textShadow: "0 1px 2px rgba(0,0,0,0.6)",
-        }}>{team.city}</div>
+        }}>{team.location}</div>
       </div>
 
       {/* Bar  -  clean column, no text inside */}
@@ -523,7 +523,7 @@ const PodiumCard: React.FC<{
         <div style={{
           fontSize: isTop3 ? TYPOGRAPHY.body : TYPOGRAPHY.bodySmall, color: "rgba(255,255,255,0.7)",
           fontFamily: "'Inter', sans-serif", textAlign: "center", fontWeight: 600,
-        }}>{team.flag} {team.city}</div>
+        }}>{team.flag} {team.location}</div>
       </div>
     </div>
   );

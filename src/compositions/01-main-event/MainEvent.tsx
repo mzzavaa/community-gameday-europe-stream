@@ -974,7 +974,7 @@ const CoOrganizersCard: React.FC<{ frame: number; fps: number }> = ({ frame, fps
     title: "AWS User Group Leader",
     ug: getOrganizerRole(p),
     ugLogo: ugLogo(getOrganizerUserGroup(p)),
-    city: p.location ?? "",
+    location: p.location ?? "",
     color: CARD_COLORS[i] ?? GD_ACCENT,
   }));
 
@@ -1072,7 +1072,7 @@ const CoOrganizersCard: React.FC<{ frame: number; fps: number }> = ({ frame, fps
                       fontSize: TYPOGRAPHY.bodySmall, color: "rgba(255,255,255,0.45)",
                       fontFamily: FF, display: "flex", alignItems: "center", justifyContent: "center", gap: 4,
                     }}>
-                      <PinIcon s={10} c={p.color} />{p.city}
+                      <PinIcon s={10} c={p.color} />{p.location}
                     </div>
                   </div>
                 </div>

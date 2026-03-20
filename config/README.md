@@ -20,7 +20,9 @@ All people involved in the event.
 
 **`AWS_SUPPORTERS`** - AWS staff supporting the event. Same shape as ORGANIZERS but `type: "aws"`. Entries with `country: "Gamemaster"` are automatically shown in the `Insert-GamemastersUpdate` insert.
 
-**`USER_GROUPS`** - All participating user groups with `flag`, `name`, `city`.
+**`USER_GROUPS`** - All participating user groups. Each entry has `flag`, `name`, `location` ("City, Country"), and an optional `logo` path.
+
+To add a UG logo: drop the image into `public/assets/logos/` and set `logo: "assets/logos/your-ug.png"` on the matching `USER_GROUPS` entry. The logo will appear automatically in all compositions (InfoLoop, MainEvent, Closing).
 
 Face images go in `public/assets/faces/` and are referenced as `"assets/faces/name.jpg"`. Use `staticFile()` from Remotion when referencing them in compositions.
 
@@ -29,12 +31,6 @@ Face images go in `public/assets/faces/` and are referenced as `"assets/faces/na
 ## `schedule.ts`
 
 The event timeline as an array of `ScheduleSegment` objects with `label`, `startMinute`, `endMinute`, and `type`. Used by the InfoLoop pre-show and any composition that needs to know the current phase.
-
----
-
-## `logos.ts`
-
-Logo paths for participating user groups and sponsors. Sourced from the Notion workspace. See the file header for the Notion import workflow.
 
 ---
 
